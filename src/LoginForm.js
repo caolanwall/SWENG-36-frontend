@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
 
 function LoginWrapper() {
 	return (<div>
@@ -12,7 +13,7 @@ function Title(props) {
 	return <h1>reView</h1>;
 }
 
-class LoginForm extends React.Component {
+class LoginForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {username: '', password: ''};
@@ -20,6 +21,11 @@ class LoginForm extends React.Component {
 		this.handleUsernameChange = this.handleUsernameChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleReset = this.handleReset.bind(this);
+	}
+
+	resetState(){
+		this.setState({username: '', password: ''});
 	}
 
 	handleUsernameChange(event) {
@@ -30,9 +36,25 @@ class LoginForm extends React.Component {
 		this.setState({password: event.target.value});
 	}
 
-	handleSubmit(event) {
-		alert('Login submitted: ' + this.state.username + ' ' + this.state.password);
+	handleReset(event) {
 		event.preventDefault();
+		this.resetState();
+	}
+
+	handleSubmit(event) {
+		event.preventDefault();
+		const data = {
+			username: this.state.username,
+			password: this.state.password
+		};
+
+		axios.post(
+			//TODO Integrate with backend by receiving back approval, then route to home screen
+			"http://127.0.0.1/user/", data)
+			.then(res => console.log(res))
+			.catch(err => console.log(err)
+			);
+		alert("Sent post request!");
 	}
 
 	render() {
@@ -46,11 +68,12 @@ class LoginForm extends React.Component {
 			<div> Password: </div>
 			<input type="password" value={this.state.password} onChange={this.handlePasswordChange} />
 			</div>
-			<button> Reset </button> {" "}
+			<button onClick={this.handleReset}> Reset </button> {" "}
 			<input type="submit" value="Submit"/>
 			</form>
 		);
 	}
 }
+
 
 export default LoginWrapper;
