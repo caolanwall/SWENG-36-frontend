@@ -1,12 +1,21 @@
-import {BrowserRouter, Swich, Route} from 'react-router-dom';
+import React from 'react';
+import {
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
-ReactDOM.render((
-<BrowserRouter>
-	<App /> //TODO change to actual root element's name
-</BrowserRouter>
-), document.getElementById('root'));
+import LoginForm from './LoginForm';
+import HomeScreen from './HomeScreen';
 
-<Switch>
-	<Route exact path='/' component={Home}/>
-	<Route exact path='/login' component={LoginForm}/>
-</Switch>
+
+const Router = () => (
+  <Switch>
+    <Redirect from="/" to="/login"/>
+    <Route path="/home" component={HomeScreen} />
+    <Route path="/login" component={LoginForm} />
+  </Switch>
+);
+
+export default Router;
+
