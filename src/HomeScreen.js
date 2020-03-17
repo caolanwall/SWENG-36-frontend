@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import InfoTable from './InfoTable';
 
-const isLoggedIn =true;
+const isLoggedIn = true;
 
 class HomeScreen extends React.Component {
 
@@ -18,7 +19,9 @@ class HomeScreen extends React.Component {
   		axios.get(url, {headers : {'crossDomain' : true, 'Content-type' : 'application/json'}})
   		.then(res => {
   			this.setState({modules : res.data})
-  			});
+  			})
+			.catch(err => console.log(err)
+			);
   	}
 
   	render() {
@@ -29,6 +32,7 @@ class HomeScreen extends React.Component {
 		        		Hello Home
 		        	</p>
 		    	</header>
+			<InfoTable />
 		    </div>
 	 	);
  	}
@@ -38,5 +42,6 @@ class HomeScreen extends React.Component {
  	}
 
 }
+
 
 export default HomeScreen;
