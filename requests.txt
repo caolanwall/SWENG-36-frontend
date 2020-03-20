@@ -1,0 +1,31 @@
+Authentification:
+	Type: 			post;
+	Triggered by:	clicking 'submit' button on the login screen 
+	Fields: 		[username,
+			 		password_hash];
+
+
+Assignments overview - student:
+	Type: 			get;
+	Triggered by:	entering the home screen, if user is a student;
+	Fields:			*[assignment_1, assignment_2 ...];
+
+
+Assignments overview - instructor:
+	Type: 			get;
+	Triggered by:	entering the home screen, if user is an instructor;
+	Fields:			***[assignment_1, assignment_2 ...];
+
+
+Upload pdf:
+	Type:			post;
+	Triggered by:	submitting a review or an assignment;
+	Fields:			[document_pdf, document_type, document_name, document_author]
+
+
+
+*Assignment: [module name, assignment_name, **assignment_status, due_date]
+
+**assignment_status: [Not completed / Work submitted, awaiting peer reviews / Work submitted, peer reviews to complete]
+
+***Assignment: [module name, assignment_name, due_date, average_grade, submissions_remaining, submissions_expected]
