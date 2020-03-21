@@ -13,6 +13,7 @@ import StudentHome from './StudentHome';
 import InstructorHome from './InstructorHome';
 import PeerSubmission from './PeerSubmission';
 import PDFView from './PDFView';
+import Upload from './Upload';
 import {PrivateRoute} from './routes.js';
 import {AuthButton} from './Authentification';
 // export default wrapper;
@@ -30,16 +31,16 @@ export default function App () {
         <li>  <Link to ={{
                                 pathname:"/pdfView",
                                 docName:"/example.pdf"
-
                             }} className = "nav'link">
-                                PDF
-                            </Link></li>
-
+                      PDF
+              </Link></li>
+          <li> <Link to="upload">Upload Page</Link></li>
 	        </ul>
 
 			<Route path="/login" component={LoginForm} />
 			<Route path="/peerSubmission" component={PeerSubmission}/>
       <Route path="/pdfView" component={PDFView}/>
+      <Route path="/upload" component={Upload}/>
 	        <PrivateRoute path='/studentHome' component={StudentHome} />
 	        <PrivateRoute path='/instructorHome' component={InstructorHome} />
 
