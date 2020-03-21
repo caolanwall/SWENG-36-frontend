@@ -59,8 +59,8 @@ function DataTable(){
 						accessor: 'title',
 					},
 					{
-						Header: 'Type',
-						accessor: 'type',
+						Header: 'Stage',
+						accessor: 'stage',
 					},
 					{
 						Header: 'Date Due',
@@ -80,7 +80,7 @@ const newModule = () => {
 	return {
 		name: "Computing I",
 		title: "Matrix Multiplication", 
-		type: "Work",
+		stage: "Work",
 		dateDue: "13/08/2020", 
 	}
 }
