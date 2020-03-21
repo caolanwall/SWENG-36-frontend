@@ -8,7 +8,8 @@ import {
 } from "react-router-dom";
 
 import LoginForm from './LoginForm';
-import HomeScreen from './HomeScreen';
+import StudentHome from './StudentHome';
+import InstructorHome from './InstructorHome';
 import {PrivateRoute} from './routes.js';
 import {AuthButton} from './Authentification';
 // export default wrapper;
@@ -19,12 +20,14 @@ export default function App () {
 	      <div>
 	      <AuthButton/>
 	        <ul>
-	          <li><Link to="/home">Home Page</Link></li>
+	          <li><Link to="/studentHome">Student Home Page</Link></li>
+	          <li><Link to="/instructorHome">Instructor Home Page</Link></li>
 	          <li><Link to="/login">Login Page</Link></li>
 	        </ul>
 
 	        <Route path="/login" component={LoginForm}/>
-	        <PrivateRoute path='/home' component={HomeScreen} />
+	        <PrivateRoute path='/studentHome' component={StudentHome} />
+	        <PrivateRoute path='/instructorHome' component={InstructorHome} />
 	      
 	      </div>
 	    </Router>

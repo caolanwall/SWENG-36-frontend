@@ -4,7 +4,7 @@ import InfoTable from './InfoTable';
 
 const isLoggedIn = true;
 
-class HomeScreen extends React.Component {
+class StudentHome extends React.Component {
 
   	constructor(props) {
     	super(props);
@@ -29,7 +29,7 @@ class HomeScreen extends React.Component {
 		    <div className="Home">
 		    	<header className="App-header">
 		        	<p>
-		        		Hello Home
+		        	Welcome Home, Student {this.props.username}	
 		        	</p>
 		    	</header>
 			<InfoTable />
@@ -44,4 +44,4 @@ class HomeScreen extends React.Component {
 }
 
 
-export default HomeScreen;
+export default StudentHome;
