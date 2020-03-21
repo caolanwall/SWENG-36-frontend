@@ -90,9 +90,15 @@ class LoginForm extends Component {
 
 		if (redirectToReferrer === true) {
 			if(currentLoginType === "student") {
-				return <Redirect to="/studentHome" />
+				return <Redirect to={{
+					pathname: '/studentHome',
+						state: { username: this.state.username }
+					}} />
 			} else if (currentLoginType === "instructor") {
-				return <Redirect to="/instructorHome"/>
+				return <Redirect to={{
+					pathname: "/instructorHome",
+						state: { username: this.state.username }
+				}} />
 			}
 		}
 		return (

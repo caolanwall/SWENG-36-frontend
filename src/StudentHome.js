@@ -9,7 +9,7 @@ class StudentHome extends React.Component {
   	constructor(props) {
     	super(props);
     	this.state = {
-    		username : this.props.username, 	// passed on from the login screen 
+    		username : this.props.location.state.username, 	// passed on from the login screen 
     		modules : [] 						// Array of module container classes 
     	};
   	}
@@ -29,7 +29,7 @@ class StudentHome extends React.Component {
 		    <div className="Home">
 		    	<header className="App-header">
 		        	<p>
-		        	Welcome Home, Student {this.props.username}	
+		        	Welcome Home, Student {this.state.username}	
 		        	</p>
 		    	</header>
 			<InfoTable />
