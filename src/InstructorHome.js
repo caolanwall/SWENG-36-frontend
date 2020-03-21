@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import InfoTable from './InfoTable';
+import InfoTable, {range, makeData} from './InfoTable';
 
 const isLoggedIn = true;
 
@@ -32,7 +32,7 @@ class InstructorHome extends React.Component {
 				Welcome Home, Instructor {this.state.username}
 		        	</p>
 		    	</header>
-			<InfoTable />
+			<DataTable />
 		    </div>
 	 	);
  	}
@@ -43,5 +43,61 @@ class InstructorHome extends React.Component {
 
 }
 
+
+function parseData(){
+	//TODO actually parse JSON module data
+	return makeData(newModule, 20);
+}
+
+function DataTable(){
+	const columns = React.useMemo(
+		() => [
+			{
+				Header: 'Modules',
+				columns: [
+					{
+						Header: 'Name',
+						accessor: 'name',
+					},
+					{
+						Header: 'Title',
+						accessor: 'title',
+					},
+					{
+						Header: 'Stage',
+						accessor: 'stage',
+					},
+					{
+						Header: 'Average',
+						accessor: 'average',
+					},
+					{
+						Header: 'Submission %',
+						accessor: 'submissionPercentage',
+					},
+					{
+						Header: 'Date Due',
+						accessor: 'dateDue',
+					},
+				],
+			},
+		],
+		[]
+	)
+
+	const data = React.useMemo(() => parseData(), [])
+
+	return <InfoTable columns={columns} data={data} />;
+}
+const newModule = () => {
+	return {
+		name: "DLD",
+		title: "Full Adder", 
+		stage: "Review",
+		average: 7.5,
+		submissionPercentage: 67,
+		dateDue: "13/08/2020", 
+	}
+}
 
 export default InstructorHome;
