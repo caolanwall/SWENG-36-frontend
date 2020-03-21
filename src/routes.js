@@ -1,21 +1,15 @@
 import React from 'react';
-import {
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import {Route, Redirect} from "react-router-dom";
+import {fakeAuth} from './Authentification';
 
-import LoginForm from './LoginForm';
-import HomeScreen from './HomeScreen';
-
-
-const Router = () => (
-  <Switch>
-    <Redirect from="/" to="/login"/>
-    <Route path="/home" component={HomeScreen} />
-    <Route path="/login" component={LoginForm} />
-  </Switch>
-);
-
-export default Router;
+export const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    fakeAuth.isAuthenticated === true
+      ? <Component {...props} />
+      : <Redirect to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }} />
+  )} />
+)
 
