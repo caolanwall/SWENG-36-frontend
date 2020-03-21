@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 
 
 export default wrapper;
@@ -7,6 +8,7 @@ export default wrapper;
 function wrapper() {
     return (<div align="center">
         <Title />
+        <PDFLinks/>
         <PeerSubmission />
     </div>
     );
@@ -16,7 +18,30 @@ function Title(props) {
     return <h1>Peer Review Submissions</h1>;
 }
 
+function PDFLinks(){
+  return(
+    <React.Fragment>
+    <div>
+        <Link to={{
+            pathname:"/pdfView",
+            docName:"/rubric.pdf"
 
+        }}>
+            Marking Rubric
+        </Link>
+        </div>
+        <div>
+        <Link to={{
+            pathname:"/pdfView",
+            docName:"/solution.pdf"
+
+        }}>
+            Submission to be marked
+        </Link>
+        </div>
+    </React.Fragment>
+  );
+}
 
 const initialState = {
     comments: "",
