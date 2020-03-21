@@ -78,7 +78,7 @@ class PeerSubmission extends React.Component {
             //	alert("Sent post request!");
 
         }
-        
+
     };
 
     render() {
@@ -106,14 +106,9 @@ class PeerSubmission extends React.Component {
                         {this.state.gradeError}
                     </div>
                 </div>
-                
+
                 <button type="submit">submit</button>
             </form>
         );
     }
 }
-
-
-
-
-
