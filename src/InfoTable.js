@@ -70,68 +70,16 @@ function Table({ columns, data }) {
 	)
 }
 
-function InfoTable() {
-	const columns = React.useMemo(
-		() => [
-			{
-				Header: 'Name',
-				columns: [
-					{
-						Header: 'First Name',
-						accessor: 'firstName',
-					},
-					{
-						Header: 'Last Name',
-						accessor: 'lastName',
-					},
-				],
-			},
-			{
-				Header: 'Info',
-				columns: [
-					{
-						Header: 'Age',
-						accessor: 'age',
-					},
-					{
-						Header: 'Visits',
-						accessor: 'visits',
-					},
-					{
-						Header: 'Status',
-						accessor: 'status',
-					},
-					{
-						Header: 'Profile Progress',
-						accessor: 'progress',
-					},
-				],
-			},
-		],
-		[]
-	)
-
-	const data = React.useMemo(() => makeData(20), [])
+function InfoTable(props) {
 
 	return (
 		<Styles>
-		<Table columns={columns} data={data} />
+		<Table columns={props.columns} data={props.data} />
 		</Styles>
 	)
 }
 
-const newPerson = () => {
-	return {
-		firstName: "Obama",
-		lastName: "Care", 
-		age: 57,
-		visits: 87, 
-		progress: 92, 
-		status: 'free',
-	}
-}
-
-const range = len => {
+export const range = len => {
 	const arr = []
 	for (let i = 0; i < len; i++) {
 		arr.push(i)
@@ -139,12 +87,12 @@ const range = len => {
 	return arr
 }
 
-function makeData(...lens) {
+export function makeData(creatorFunction, ...lens) {
 	const makeDataLevel = (depth = 0) => {
 		const len = lens[depth]
 		return range(len).map(d => {
 			return {
-				...newPerson(),
+				...creatorFunction(),
 				subRows: lens[depth + 1] ? makeDataLevel(depth + 1) : undefined,
 			}
 		})
