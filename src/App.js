@@ -15,6 +15,8 @@ import InstructorHome from './InstructorHome';
 import PeerSubmission from './PeerSubmission';
 import PDFView from './PDFView';
 import Upload from './Upload';
+import FeedbackReview from './FeedbackReview';
+import CommentsDisplay from './CommentsDisplay';
 import {PrivateRoute} from './routes.js';
 import {AuthButton} from './Authentification';
 
@@ -37,7 +39,8 @@ export default function App () {
 				<Route path="/peerSubmission" component={PeerSubmission}/>
 	      		<Route path="/pdfView" component={PDFView}/>
 	      		<Route path="/upload" component={Upload}/>
-		        
+					<Route path="/FeedbackReview" component={FeedbackReview} />
+					<Route path="/feedback/comments" component={CommentsDisplay} />
 				<Route path="/login" component={LoginForm} />
 				<Route path='/students/:username/:assId' component={AssignmentLandingPage} />
 		        <PrivateRoute path='/students/:username' component={StudentHome} />
