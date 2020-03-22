@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useTable } from 'react-table'
-import { withRouter, Redirect, Link, Route} from "react-router-dom";
+import { withRouter, Redirect, Link, Route, useHistory, useLocation} from "react-router-dom";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -33,6 +33,8 @@ const Styles = styled.div`
 `
 
 function Table({ columns, data }) {
+	const history = useHistory();
+	const location = useLocation();
 	const {
 		getTableProps,
 		getTableBodyProps,
@@ -58,8 +60,8 @@ function Table({ columns, data }) {
 		{rows.map((row, i) => {
 			prepareRow(row)
 			return (
-			<Route render={({history}) => (
-				<tr {...row.getRowProps()} onClick={() => routeToAssignment(history, row.cells[0].value, row.cells[1].value, row.cells[2].value, row.cells[3].value)}>
+			<Route render={({history, location}) => (
+				<tr {...row.getRowProps()} onClick={() => routeToAssignment(history, location, row.index, row.cells[0].value, row.cells[1].value, row.cells[2].value, row.cells[3].value)}>
 					{row.cells.map(cell => {
 						return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
 					})}
@@ -105,9 +107,10 @@ export function makeData(creatorFunction, ...lens) {
 	return makeDataLevel()
 }
 
-function routeToAssignment(history, arg1, arg2, stage, arg4) {
+function routeToAssignment(history, location, index, moduleName, assignmentName, stage, dueDate) {
 	//TODO route correctly depending on the assignment stage
-	history.push('/upload')
+	alert(index);
+	history.push({pathname: location.pathname+'/3', state: {moduleName: moduleName, assignmentName: assignmentName, stage: stage, dueDate: dueDate}});
 }
 
 export default InfoTable 

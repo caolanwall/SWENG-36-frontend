@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 
 import LoginForm from './LoginForm';
+import AssignmentLandingPage from './AssignmentHome';
 import StudentHome from './StudentHome';
 import InstructorHome from './InstructorHome';
 import PeerSubmission from './PeerSubmission';
@@ -16,7 +17,6 @@ import PDFView from './PDFView';
 import Upload from './Upload';
 import {PrivateRoute} from './routes.js';
 import {AuthButton} from './Authentification';
-// export default wrapper;
 
 export default function App () {
 	return (
@@ -33,24 +33,19 @@ export default function App () {
               	</li>
           		<li> <Link to="upload">Upload Page</Link></li>
 	        </ul>
-
-			<Route path="/peerSubmission" component={PeerSubmission}/>
-      		<Route path="/pdfView" component={PDFView}/>
-      		<Route path="/upload" component={Upload}/>
-	        
-			<Route path="/login" component={LoginForm} />
-	        <PrivateRoute path='/students/:username' component={StudentHome} />
-	        <PrivateRoute path='/instructors/:username' component={InstructorHome} />
-	        <Route exact path="/" render={() => (<Redirect to="/login" />)} />          
-
+	        <Switch>
+				<Route path="/peerSubmission" component={PeerSubmission}/>
+	      		<Route path="/pdfView" component={PDFView}/>
+	      		<Route path="/upload" component={Upload}/>
+		        
+				<Route path="/login" component={LoginForm} />
+				<Route path='/students/:username/:assId' component={AssignmentLandingPage} />
+		        <PrivateRoute path='/students/:username' component={StudentHome} />
+		        <PrivateRoute path='/instructors/:username' component={InstructorHome} />
+		        <Route exact path="/" render={() => (<Redirect to="/login" />)} />          
+	        </Switch>
 	      </div>
 	    </Router>
 	    );
 }
 
-// function wrapper(){
-// 	return(<div align="center">
-// 		<LoginForm />
-// 		</div>
-// 	);
-// }
