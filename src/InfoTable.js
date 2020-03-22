@@ -32,7 +32,7 @@ const Styles = styled.div`
   }
 `
 
-function Table({ columns, data }) {
+function Table({ columns, data, routeTo }) {
 	const history = useHistory();
 	const location = useLocation();
 	const {
@@ -61,7 +61,7 @@ function Table({ columns, data }) {
 			prepareRow(row)
 			return (
 			<Route render={({history, location}) => (
-				<tr {...row.getRowProps()} onClick={() => routeToAssignment(history, location, row.index, row.cells[0].value, row.cells[1].value, row.cells[2].value, row.cells[3].value)}>
+				<tr {...row.getRowProps()} onClick={() => routeTo(history, location, row.index, row.cells)}>
 					{row.cells.map(cell => {
 						return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
 					})}
@@ -80,7 +80,7 @@ function InfoTable(props) {
 
 	return (
 		<Styles>
-		<Table columns={props.columns} data={props.data} />
+		<Table columns={props.columns} data={props.data} routeTo={props.routeTo}/>
 		</Styles>
 	)
 }
@@ -105,12 +105,6 @@ export function makeData(creatorFunction, ...lens) {
 	}
 
 	return makeDataLevel()
-}
-
-function routeToAssignment(history, location, index, moduleName, assignmentName, stage, dueDate) {
-	//TODO route correctly depending on the assignment stage
-	alert(index);
-	history.push({pathname: location.pathname+'/3', state: {moduleName: moduleName, assignmentName: assignmentName, stage: stage, dueDate: dueDate}});
 }
 
 export default InfoTable 

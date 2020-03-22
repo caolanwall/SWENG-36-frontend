@@ -77,7 +77,7 @@ function DataTable(){
 
 	const data = React.useMemo(() => parseData(), [])
 
-	return <InfoTable columns={columns} data={data} />;
+	return <InfoTable columns={columns} data={data} routeTo={routeToAssignment}/>;
 }
 const newModule = () => {
 	return {
@@ -86,6 +86,12 @@ const newModule = () => {
 		stage: "Not started",
 		dateDue: "13/08/2020", 
 	}
+}
+
+function routeToAssignment(history, location, index, cells) {
+	//TODO route correctly depending on the assignment stage
+	alert(index);
+	history.push({pathname: location.pathname + '/' + index, state: {moduleName: cells[0].value, assignmentName: cells[1].value, stage: cells[2].value, dueDate: cells[3].value}});
 }
 
 export default StudentHome;

@@ -5,18 +5,18 @@ import {Link} from "react-router-dom";
 
 const isLoggedIn = true;
 
-class InstructorHome extends React.Component {
+class InstructorModuleDetails extends React.Component {
 
   	constructor(props) {
     	super(props);
     	this.state = {
     		username : this.props.location.state.username, 	// passed on from the login screen 
-    		modules : [] 						// Array of module container classes 
+    		moduleName : this.props.location.state.moduleName
     	};
   	}
 
   	componentDidMount() {
-  		let url = '127.0.0.1:8001/users/' + this.username + '/modules';
+  		let url = '127.0.0.1:8001/instructors/' + this.username + '/modules/' + this.moduleName;
   		axios.get(url, {headers : {'crossDomain' : true, 'Content-type' : 'application/json'}})
   		.then(res => {
   			this.setState({modules : res.data})
@@ -32,9 +32,9 @@ class InstructorHome extends React.Component {
      				<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
  				</Link>
 		    	<header className="App-header">
-		        	<p>
-				Welcome Home, Instructor {this.state.username}
-		        	</p>
+		        	<h2>
+				Module: {this.state.moduleName}
+		        	</h2>
 		    	</header>
 			<DataTable />
 		    </div>
@@ -57,31 +57,35 @@ function DataTable(){
 	const columns = React.useMemo(
 		() => [
 			{
-				Header: 'Modules',
+				Header: 'Module Details',
 				columns: [
 					{
-						Header: 'Name',
-						accessor: 'name',
+						Header: 'Reviewer',
+						accessor: 'reviewer',
 					},
 					{
-						Header: 'Title',
-						accessor: 'title',
+						Header: 'Author',
+						accessor: 'author',
 					},
 					{
-						Header: 'Stage',
-						accessor: 'stage',
+						Header: 'Work',
+						accessor: 'work',
 					},
 					{
-						Header: 'Average',
-						accessor: 'average',
+						Header: 'Expected Marks',
+						accessor: 'expectedMarks',
 					},
 					{
-						Header: 'Submission %',
-						accessor: 'submissionPercentage',
+						Header: 'Marks Given',
+						accessor: 'marksGiven',
 					},
 					{
-						Header: 'Date Due',
-						accessor: 'dateDue',
+						Header: 'Difference',
+						accessor: 'difference',
+					},
+					{
+						Header: 'Review Date',
+						accessor: 'reviewDate',
 					},
 				],
 			},
@@ -91,23 +95,18 @@ function DataTable(){
 
 	const data = React.useMemo(() => parseData(), [])
 
-	return <InfoTable columns={columns} data={data} routeTo={routeToModule}/>;
+	return <InfoTable columns={columns} data={data} />;
 }
 const newModule = () => {
 	return {
-		name: "DLD",
-		title: "Full Adder", 
-		stage: "Review",
-		average: 7.5,
-		submissionPercentage: 67,
-		dateDue: "13/08/2020", 
+		reviewer: "John O'Toole",
+		author: "Anthony Burke",
+		work: "assignment.pdf",
+		expectedMarks: "75%",
+		marksGiven: "68%",
+		difference: "7%",
+		reviewDate: "17/03/2020",
 	}
 }
 
-function routeToModule(history, location, index, cells) {
-	//TODO route correctly depending on the assignment stage
-	alert(index);
-	history.push({pathname: location.pathname+'/modules/' + index, state: {moduleName: cells[0].value}});
-}
-
-export default InstructorHome;
+export default InstructorModuleDetails;
