@@ -83,7 +83,7 @@ const newModule = () => {
 	return {
 		name: "Computing I",
 		title: "Matrix Multiplication", 
-		stage: "Work",
+		stage: "Not started",
 		dateDue: "13/08/2020", 
 	}
 }

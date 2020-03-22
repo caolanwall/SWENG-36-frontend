@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class Upload extends Component {
-    state = {
-        selectedFile: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedFile: null,
+            // username : this.props.location.state.username,  
+            // assignmentName : this.props.location.state.assignmentName,  
+            // dueDate : this.props.location.state.dueDate,  
+        }
     }
     fileSelectHandler = event => {
         console.log(event.target.files[0])

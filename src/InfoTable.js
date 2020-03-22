@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useTable } from 'react-table'
+import { withRouter, Redirect, Link, Route} from "react-router-dom";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -42,7 +43,6 @@ function Table({ columns, data }) {
 		columns,
 		data,
 	})
-	//row.cells[1].value
 	return (
 		<table {...getTableProps()}>
 		<thead>
@@ -58,11 +58,15 @@ function Table({ columns, data }) {
 		{rows.map((row, i) => {
 			prepareRow(row)
 			return (
-				<tr {...row.getRowProps()}>
-				{row.cells.map(cell => {
-					return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-				})}
+			<Route render={({history}) => (
+				<tr {...row.getRowProps()} onClick={() => routeToAssignment(history, row.cells[0].value, row.cells[1].value, row.cells[2].value, row.cells[3].value)}>
+					{row.cells.map(cell => {
+						return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+					})}
 				</tr>
+			)}
+			/>
+
 			)
 		})}
 		</tbody>
@@ -99,6 +103,11 @@ export function makeData(creatorFunction, ...lens) {
 	}
 
 	return makeDataLevel()
+}
+
+function routeToAssignment(history, arg1, arg2, stage, arg4) {
+	//TODO route correctly depending on the assignment stage
+	history.push('/upload')
 }
 
 export default InfoTable 
