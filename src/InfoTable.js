@@ -42,7 +42,7 @@ function Table({ columns, data }) {
 		columns,
 		data,
 	})
-
+	//row.cells[1].value
 	return (
 		<table {...getTableProps()}>
 		<thead>

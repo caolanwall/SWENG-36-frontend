@@ -22,27 +22,26 @@ export default function App () {
 	return (
 	    <Router>
 	      <div>
-	      <AuthButton/>
 	        <ul>
-				<li><Link to="/studentHome">Student Home Page</Link></li>
-				<li><Link to="/instructorHome">Instructor Home Page</Link></li>
-				<li><Link to="/login">Login Page</Link></li>
 				<li><Link to="/peerSubmission">Peer Review Submission Page</Link></li>
-        <li>  <Link to ={{
+       			<li><Link to ={{
                                 pathname:"/pdfView",
                                 docName:"/example.pdf"
                             }} className = "nav'link">
                       PDF
-              </Link></li>
-          <li> <Link to="upload">Upload Page</Link></li>
+              		</Link>
+              	</li>
+          		<li> <Link to="upload">Upload Page</Link></li>
 	        </ul>
 
-			<Route path="/login" component={LoginForm} />
 			<Route path="/peerSubmission" component={PeerSubmission}/>
-      <Route path="/pdfView" component={PDFView}/>
-      <Route path="/upload" component={Upload}/>
-	        <PrivateRoute path='/studentHome' component={StudentHome} />
-	        <PrivateRoute path='/instructorHome' component={InstructorHome} />
+      		<Route path="/pdfView" component={PDFView}/>
+      		<Route path="/upload" component={Upload}/>
+	        
+			<Route path="/login" component={LoginForm} />
+	        <PrivateRoute path='/students/:username' component={StudentHome} />
+	        <PrivateRoute path='/instructors/:username' component={InstructorHome} />
+	        <Route exact path="/" render={() => (<Redirect to="/login" />)} />          
 
 	      </div>
 	    </Router>

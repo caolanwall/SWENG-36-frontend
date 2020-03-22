@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import InfoTable, {range, makeData} from './InfoTable';
+import {Link} from "react-router-dom";
 
 const isLoggedIn = true;
 
@@ -27,6 +28,9 @@ class InstructorHome extends React.Component {
   	render() {
 		return (
 		    <div className="InstructorHome">
+		    	<Link to="/login">
+     				<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
+ 				</Link>
 		    	<header className="App-header">
 		        	<p>
 				Welcome Home, Instructor {this.state.username}
