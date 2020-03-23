@@ -24,7 +24,7 @@ function PDFLinks(){
     <div>
         <Link to={{
             pathname:"/pdfView",
-            docName:"/rubric.pdf"
+            docName:"/AssignmentRubric.pdf"
 
         }}>
             Marking Rubric
@@ -33,7 +33,7 @@ function PDFLinks(){
         <div>
         <Link to={{
             pathname:"/pdfView",
-            docName:"/solution.pdf"
+            docName:"/CompMathsAss1V3.pdf"
 
         }}>
             Submission to be marked
