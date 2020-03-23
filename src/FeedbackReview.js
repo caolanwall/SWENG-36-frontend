@@ -1,51 +1,54 @@
 import React, { Component } from 'react';
+import { useTable } from 'react-table';
 import CommentsDisplay from './CommentsDisplay';
 import { withRouter, Redirect, Link, Route, Switch } from "react-router-dom";
+import AssignmentLandingPgrade from './AssignmentHome';
 
-function PDFLinks(){
-  return(
-    <React.Fragment>
-    <div>
-        <Link to={{
-            pathname:"/pdfView",
-            docName:"/AssignmentRubric.pdf"
+function PDFLinks() {
+    return (
+        <React.Fragment>
+            <div>
+                <Link to={{
+                    pathname: "/pdfView",
+                    docName: "/rubric.pdf"
 
-        }}>
-            Marking Rubric
+                }}>
+                    Marking Rubric
         </Link>
-        </div>
-        <div>
-        <Link to={{
-            pathname:"/pdfView",
-            docName:"/CompMathsAss1V3.pdf"
-        }}>
-            My Submission
+            </div>
+            <div>
+                <Link to={{
+                    pathname: "/pdfView",
+                    docName: "/upload.pdf"
+                }}>
+                    My Submission
         </Link>
-        </div>
-    </React.Fragment>
-  );
+            </div>
+        </React.Fragment>
+    );
 }
 
-class FeedbackReview extends Component {
+class FeedbackReview extends React.Component {
     constructor(props) {
-        super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
+        super(props); //since we are extending class Table so we have to use super in order to override Component class constructor
         this.state = { //state is by default an object
-            students: [
-                { id: 1, age: 78, email: <li><Link to="/feedback/comments">Comments</Link></li> },
-                { id: 2, age: 60, email: <li><Link to="/feedback/comments">Comments</Link></li> },
-                { id: 3, age: 88, email: <li><Link to="/feedback/comments">Comments</Link></li> },
+            feedback: [
+                { id: "", grade: "Grade", comments: "Their Feedback" },
+                { id: 1, grade: 78, comments: <Link to="/feedback/comments">Read the Comments</Link> },
+                { id: 2, grade: 60, comments: <Link to="/feedback/comments">Read the Comments</Link> },
+                { id: 3, grade: 88, comments: <Link to="/feedback/comments">Read the Comments</Link> },
             ]
         }
     }
 
     renderTableData() {
-        return this.state.students.map((student, index) => {
-            const { id, name, age, email } = student //destructuring
+        return this.state.feedback.map((feedback, index) => {
+            const { id, grade, comments } = feedback //destructuring
             return (
                 <tr key={id}>
-                    <td>{id}</td>
-                    <td>{age}</td>
-                    <td>{email}</td>
+                    <span> <td>{id}</td> </span>
+                    <span> <td>{grade}</td> </span>
+                    <span> <td>{comments}</td> </span>
                 </tr>
             )
         })
@@ -54,11 +57,12 @@ class FeedbackReview extends Component {
     render() { //Whenever our class runs, render method will be called automatically, it may have already defined in the constructor behind the scene.
         return (
             <div>
-                <h1 id='title'>React Dynamic Table</h1>
-                <PDFLinks/>
-                <table id='students'>
+                <h1 id='title'>Feedback Given to You</h1>
+                <PDFLinks />
+                <table id='feedback'>
                     <tbody>
-                        {this.renderTableData()}
+
+                        <span>  {this.renderTableData()}</span>
                     </tbody>
                 </table>
 
