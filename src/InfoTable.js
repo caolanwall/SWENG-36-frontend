@@ -107,4 +107,10 @@ export function makeData(creatorFunction, ...lens) {
 	return makeDataLevel()
 }
 
+export function getRandomDate(from, to) {
+	    from = from.getTime();
+	    to = to.getTime();
+	    return new Date(from + Math.random() * (to - from));
+}
+
 export default InfoTable 
