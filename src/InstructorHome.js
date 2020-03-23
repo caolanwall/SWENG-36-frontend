@@ -32,9 +32,9 @@ class InstructorHome extends React.Component {
      				<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
  				</Link>
 		    	<header className="App-header">
-		        	<p>
+		        	<h2>
 				Welcome Home, Instructor {this.state.username}
-		        	</p>
+		        	</h2>
 		    	</header>
 			<DataTable />
 		    </div>
@@ -111,7 +111,6 @@ const newModule = () => {
 
 function routeToModule(history, location, index, cells) {
 	//TODO route correctly depending on the assignment stage
-	alert(index);
 	history.push({pathname: location.pathname+'/modules/' + index, state: {moduleName: cells[0].value}});
 }
 
