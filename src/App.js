@@ -25,17 +25,7 @@ export default function App () {
 	return (
 		<Router>
 		<div>
-		<ul>
-		<li><Link to="/peerSubmission">Peer Review Submission Page</Link></li>
-		<li><Link to ={{
-			pathname:"/pdfView",
-				docName:"/example.pdf"
-		}} className = "nav'link">
-		PDF
-		</Link>
-		</li>
-		<li> <Link to="/upload">Upload Page</Link></li>
-		</ul>
+
 		<Switch>
 		<Route path="/peerSubmission" component={PeerSubmission}/>
 		<Route path="/pdfView" component={PDFView}/>
@@ -53,3 +43,16 @@ export default function App () {
 		</Router>
 	);
 }
+
+//Below not needed but didn't want to completely delete.
+/*<ul>
+<li><Link to="/peerSubmission">Peer Review Submission Page</Link></li>
+<li><Link to ={{
+  pathname:"/pdfView",
+    docName:"/example.pdf"
+}} className = "nav'link">
+PDF
+</Link>
+</li>
+<li> <Link to="/upload">Upload Page</Link></li>
+</ul>*/

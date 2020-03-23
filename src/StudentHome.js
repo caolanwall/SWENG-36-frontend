@@ -9,8 +9,8 @@ class StudentHome extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username : this.props.location.state.username, 	// passed on from the login screen 
-			modules : [] 						// Array of module container classes 
+			username : this.props.location.state.username, 	// passed on from the login screen
+			modules : [] 						// Array of module container classes
 		};
 	}
 
@@ -33,7 +33,7 @@ class StudentHome extends React.Component {
  			</Link>
 			<header className="App-header">
 			<h2>
-			Welcome, Student {this.state.username}	
+			Welcome, Student {this.state.username}
 			</h2>
 			</header>
 			<DataTable />
@@ -85,9 +85,9 @@ const newModule = () => {
 	const stages = ["Not Started", "First Submission", "Peer Review", "Final Submission", "Complete"];
 	return {
 		name: names[Math.floor(Math.random() * names.length)],
-		title: titles[Math.floor(Math.random() * titles.length)], 
+		title: titles[Math.floor(Math.random() * titles.length)],
 		stage: stages[Math.floor(Math.random() * stages.length)],
-		dateDue: getRandomDate(new Date("2019-10-10"), new Date("2020-04-15")).toLocaleDateString(), 
+		dateDue: getRandomDate(new Date("2019-10-10"), new Date("2020-04-15")).toLocaleDateString(),
 	}
 }
 
