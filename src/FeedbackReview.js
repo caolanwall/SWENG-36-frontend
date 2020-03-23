@@ -2,6 +2,30 @@ import React, { Component } from 'react';
 import CommentsDisplay from './CommentsDisplay';
 import { withRouter, Redirect, Link, Route, Switch } from "react-router-dom";
 
+function PDFLinks(){
+  return(
+    <React.Fragment>
+    <div>
+        <Link to={{
+            pathname:"/pdfView",
+            docName:"/rubric.pdf"
+
+        }}>
+            Marking Rubric
+        </Link>
+        </div>
+        <div>
+        <Link to={{
+            pathname:"/pdfView",
+            docName:"/upload.pdf"
+        }}>
+            My Submission
+        </Link>
+        </div>
+    </React.Fragment>
+  );
+}
+
 class FeedbackReview extends Component {
     constructor(props) {
         super(props) //since we are extending class Table so we have to use super in order to override Component class constructor
@@ -31,13 +55,14 @@ class FeedbackReview extends Component {
         return (
             <div>
                 <h1 id='title'>React Dynamic Table</h1>
+                <PDFLinks/>
                 <table id='students'>
                     <tbody>
                         {this.renderTableData()}
                     </tbody>
                 </table>
 
-            </div>    
+            </div>
         )
     }
 }

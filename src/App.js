@@ -34,7 +34,7 @@ export default function App () {
 		PDF
 		</Link>
 		</li>
-		<li> <Link to="upload">Upload Page</Link></li>
+		<li> <Link to="/upload">Upload Page</Link></li>
 		</ul>
 		<Switch>
 		<Route path="/peerSubmission" component={PeerSubmission}/>
@@ -47,10 +47,9 @@ export default function App () {
 		<Route path='/instructors/:username/modules/:moduleName' component={InstructorModuleDetails} />
 		<PrivateRoute path='/students/:username' component={StudentHome} />
 		<PrivateRoute path='/instructors/:username' component={InstructorHome} />
-		<Route exact path="/" render={() => (<Redirect to="/login" />)} />          
+		<Route exact path="/" render={() => (<Redirect to="/login" />)} />
 		</Switch>
 		</div>
 		</Router>
 	);
 }
-
