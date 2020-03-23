@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class Upload extends Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedFile: null,
-            // username : this.props.location.state.username,  
-            // assignmentName : this.props.location.state.assignmentName,  
-            // dueDate : this.props.location.state.dueDate,  
+            // username : this.props.location.state.username,
+            // assignmentName : this.props.location.state.assignmentName,
+            // dueDate : this.props.location.state.dueDate,
         }
     }
     fileSelectHandler = event => {
@@ -17,6 +18,7 @@ class Upload extends Component {
             selectedFile: event.target.files[0]
         })
     }
+
     fileUploadHandler = () => {
         const data = new FormData()
         data.append('file', this.state.selectedFile)
@@ -28,12 +30,17 @@ class Upload extends Component {
             })
     }
 
-
+    //// TODO: Code below export.
+    //Need to add back  in regular button and fileUploadHAndler when integrating properly.
     render() {
         return (
             <div className="Upload">
                 <input type="file" onChange={this.fileSelectHandler} />
-                <button onClick={this.fileUploadHandler}> Upload </button>
+                <Link to={{pathname:"/pdfView", docName:"/upload.pdf"}}>
+                  <button type="button">
+                    Upload
+                  </button>
+                </Link>
             </div>
         );
     }
@@ -41,3 +48,4 @@ class Upload extends Component {
 
 
 export default Upload;
+//<button onClick={this.fileUploadHandler}> Upload </button>
