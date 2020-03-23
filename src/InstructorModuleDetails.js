@@ -50,7 +50,7 @@ class InstructorModuleDetails extends React.Component {
 
 function parseData(){
 	//TODO actually parse JSON module data
-	return makeData(newModule, 15);
+	return makeData(newModule, Math.random() * 25 + 1);
 }
 
 function DataTable(){
@@ -215,11 +215,11 @@ const newModule = () => {
 	return {
 		reviewer: firstNames[Math.floor(Math.random() * firstNames.length)] + " " +  lastNames[Math.floor(Math.random() * lastNames.length)],
 		author: firstNames[Math.floor(Math.random() * firstNames.length)] + " " + lastNames[Math.floor(Math.random() * lastNames.length)],
-		work: "assignment" + parseInt(Math.random() * 18) + ".pdf",
+		work: "assignment" + parseInt(Math.random() * 18 + 1) + ".pdf",
 		expected: parseFloat(expected).toFixed(2) + '%',
 		given: parseFloat(given).toFixed(2) + '%',
 		difference: parseFloat(given - expected).toFixed(2) + '%',
-		reviewDate: getRandomDate(new Date("2019-10-10"), new Date("2020-04-15")).toLocaleDateString(), 
+		reviewDate: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(), 
 	}
 }
 

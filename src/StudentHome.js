@@ -44,7 +44,7 @@ class StudentHome extends React.Component {
 }
 function	parseData(){
 	//TODO actually parse JSON module data
-	return makeData(newModule, 15);
+	return makeData(newModule, Math.random() * 10 + 1);
 }
 
 function DataTable(){
@@ -87,7 +87,7 @@ const newModule = () => {
 		name: names[Math.floor(Math.random() * names.length)],
 		title: titles[Math.floor(Math.random() * titles.length)],
 		stage: stages[Math.floor(Math.random() * stages.length)],
-		dateDue: getRandomDate(new Date("2019-10-10"), new Date("2020-04-15")).toLocaleDateString(),
+		dateDue: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(),
 	}
 }
 

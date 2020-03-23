@@ -7,50 +7,50 @@ const isLoggedIn = true;
 
 class InstructorHome extends React.Component {
 
-  	constructor(props) {
-    	super(props);
-    	this.state = {
-    		username : this.props.location.state.username, 	// passed on from the login screen 
-    		modules : [] 						// Array of module container classes 
-    	};
-  	}
+	constructor(props) {
+		super(props);
+		this.state = {
+			username : this.props.location.state.username, 	// passed on from the login screen 
+			modules : [] 						// Array of module container classes 
+		};
+	}
 
-  	componentDidMount() {
-  		let url = '127.0.0.1:8001/users/' + this.username + '/modules';
-  		axios.get(url, {headers : {'crossDomain' : true, 'Content-type' : 'application/json'}})
-  		.then(res => {
-  			this.setState({modules : res.data})
-  			})
+	componentDidMount() {
+		let url = '127.0.0.1:8001/users/' + this.username + '/modules';
+		axios.get(url, {headers : {'crossDomain' : true, 'Content-type' : 'application/json'}})
+			.then(res => {
+				this.setState({modules : res.data})
+			})
 			.catch(err => console.log(err)
 			);
-  	}
+	}
 
-  	render() {
+	render() {
 		return (
-		    <div className="InstructorHome">
-		    	<Link to="/login">
-     				<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
- 				</Link>
-		    	<header className="App-header">
-		        	<h2>
-				Welcome Home, Instructor {this.state.username}
-		        	</h2>
-		    	</header>
+			<div className="InstructorHome">
+			<Link to="/login">
+			<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
+			</Link>
+			<header className="App-header">
+			<h2>
+			Welcome Home, Instructor {this.state.username}
+			</h2>
+			</header>
 			<DataTable />
-		    </div>
-	 	);
- 	}
+			</div>
+		);
+	}
 
- 	jsonToModules(jsonResponse) { 
- 		return -1; //TODO parse json response from the server to instantiate students modules list
- 	}
+	jsonToModules(jsonResponse) { 
+		return -1; //TODO parse json response from the server to instantiate students modules list
+	}
 
 }
 
 
 function parseData(){
 	//TODO actually parse JSON module data
-	return makeData(newModule, 20);
+	return makeData(newModule, Math.random() * 20 + 1);
 }
 
 function DataTable(){
@@ -105,7 +105,8 @@ const newModule = () => {
 		stage: stages[Math.floor(Math.random() * stages.length)],
 		average: parseFloat(Math.random() * 100).toFixed(2) + '%',
 		submitted: parseFloat(Math.random() * 100).toFixed(2) + '%',
-		dateDue: getRandomDate(new Date("2019-10-10"), new Date("2020-04-15")).toLocaleDateString(), 
+		dateDue: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(), 
+
 	}
 }
 
