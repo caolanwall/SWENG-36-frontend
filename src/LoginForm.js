@@ -7,6 +7,7 @@ import {
 
 import axios from 'axios';
 import {fakeAuth} from './Authentification';
+const bcrypt = require("bcryptjs")
 
 function LoginWrapper() {
 	return (<div align="center">
@@ -43,11 +44,11 @@ class LoginForm extends Component {
 	handlePasswordChange(event) {
 		this.setState({password: event.target.value});
 	}
-	
+
 	handleOptionChange = changeEvent => {
 		this.setState({
 			loginType: changeEvent.target.value
-		  });
+		});
 	};
 
 	handleReset(event) {
@@ -55,8 +56,20 @@ class LoginForm extends Component {
 		this.resetState();
 	}
 
-	doLogin = () => {
-			this.setState({redirectToReferrer: true})
+	doLogin = (data) => {
+		bcrypt.genSalt(10, function(err, salt) {
+			bcrypt.hash(data.password, salt, function(err, hash) {
+				data.password = hash;
+				axios.post(
+					//TODO Integrate with backend by receiving back approval, then route to home screen
+					"http://localhost:3000/confirmUser", data)
+					.then(res => console.log(res))
+					.catch(err => console.log(err)
+					);
+			});
+		});
+
+		this.setState({redirectToReferrer: true})
 		//TODO actually check with backend if user exists and is allowed to view page
 		fakeAuth.authenticate(() => {
 			this.setState({
@@ -67,21 +80,13 @@ class LoginForm extends Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		this.doLogin();
 		const data = {
 			username: this.state.username,
-			password: this.state.password, //TODO make this a hash
+			password: this.state.password,
 			loginType: this.state.loginType
 		};
 
-		axios.post(
-			//TODO Integrate with backend by receiving back approval, then route to home screen
-			"http://127.0.0.1/user/", data)
-			.then(res => console.log(res))
-			.catch(err => console.log(err)
-			);
-	//	alert("Sent post request!");
-
+		this.doLogin(data);
 	}
 
 	render() {
@@ -91,14 +96,14 @@ class LoginForm extends Component {
 		if (redirectToReferrer === true) {
 			if(currentLoginType === "student") {
 				return <Redirect to={{
-							pathname: '/students/'+this.state.username,
-							state: { username: this.state.username }
-						}} />
+					pathname: '/students/'+this.state.username,
+						state: { username: this.state.username }
+				}} />
 			} else if (currentLoginType === "instructor") {
 				return <Redirect to={{
-							pathname: "/instructors/"+this.state.username,
-							state: { username: this.state.username }
-						}} />
+					pathname: "/instructors/"+this.state.username,
+						state: { username: this.state.username }
+				}} />
 			}
 		}
 		return (
