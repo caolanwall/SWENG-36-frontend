@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter, Redirect, Link, Route} from "react-router-dom";
 
-import PdfStuff from './PDFView';
+import PdfStuff from './../Components/PDFView';
 import ReviewYourPeers from './PeerSubmission';
-import FeedbackReview from './FeedbackReview';
+import FeedbackReview from './../Components/FeedbackReview';
 
 class AssignmentLandingPage extends Component {
     constructor(props) {

@@ -8,18 +8,18 @@ import {
 	Redirect,
 } from "react-router-dom";
 
-import LoginForm from './LoginForm';
-import AssignmentLandingPage from './AssignmentHome';
-import StudentHome from './StudentHome';
-import InstructorHome from './InstructorHome';
-import InstructorModuleDetails from './InstructorModuleDetails';
-import PeerSubmission from './PeerSubmission';
-import PDFView from './PDFView';
-import Upload from './Upload';
-import FeedbackReview from './FeedbackReview';
-import CommentsDisplay from './CommentsDisplay';
+import LoginForm from './Components/LoginForm';
+import AssignmentLandingPage from './Student/AssignmentHome';
+import StudentHome from './Student/StudentHome';
+import InstructorHome from './Instructor/InstructorHome';
+import InstructorModuleDetails from './Instructor/InstructorModuleDetails';
+import PeerSubmission from './Student/PeerSubmission';
+import PDFView from './Components/PDFView';
+import Upload from './Components/Upload';
+import FeedbackReview from './Components/FeedbackReview';
+import CommentsDisplay from './Components/CommentsDisplay';
 import {PrivateRoute} from './routes.js';
-import {AuthButton} from './Authentification';
+import {AuthButton} from './Components/Authentification';
 
 export default function App () {
 	return (
