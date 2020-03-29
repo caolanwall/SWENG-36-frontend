@@ -5,18 +5,21 @@ import {Link} from "react-router-dom";
 
 const isLoggedIn = true;
 
-class InstructorHome extends React.Component {
+class AssignmentEditor extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			username : this.props.location.state.username, 	// passed on from the login screen 
-			modules : [] 						// Array of module container classes 
+			username : this.props.location.state.username, 	
+			moduleId: this.props.location.state.moduleId,
+			moduleName: this.props.location.state.moduleName,
+			assignmentId: this.props.location.state.assignmentId,
+			submissions : [] 
 		};
 	}
 
 	componentDidMount() {
-		let url = 'localhost:3000/instructors/' + this.username + '/modules';
+		let url = 'localhost:3000/instructors/' + this.username + '/modules/' + this.moduleId + '/assignments/' + this.assignmentId;
 		axios.get(url, {headers : {'crossDomain' : true, 'Content-type' : 'application/json'}})
 			.then(res => {
 				this.setState({modules : res.data})
@@ -27,13 +30,13 @@ class InstructorHome extends React.Component {
 
 	render() {
 		return (
-			<div className="InstructorHome">
+			<div className="AssignmentEditor">
 			<Link to="/login">
 			<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
 			</Link>
 			<header className="App-header">
 			<h2>
-			Welcome Home, Instructor {this.state.username}
+			Assignments Editor for {this.state.moduleName}
 			</h2>
 			</header>
 			<DataTable />
@@ -107,7 +110,7 @@ const newModule = () => {
 
 function routeToModule(history, location, index, cells) {
 	//TODO route correctly depending on the assignment stage
-	history.push({pathname: location.pathname+'/modules/' + index, state: {moduleId: index, moduleName: cells[0].value}});
+	history.push({pathname: location.pathname+'/modules/' + index, state: {moduleName: cells[0].value}});
 }
 
-export default InstructorHome;
+export default AssignmentEditor;

@@ -12,7 +12,8 @@ import LoginForm from './Components/LoginForm';
 import AssignmentLandingPage from './Student/AssignmentHome';
 import StudentHome from './Student/StudentHome';
 import InstructorHome from './Instructor/InstructorHome';
-import InstructorModuleDetails from './Instructor/InstructorModuleDetails';
+import ModuleDetails from './Instructor/ModuleDetails';
+import AssignmentEditor from './Instructor/AssignmentEditor';
 import PeerSubmission from './Student/PeerSubmission';
 import PDFView from './Components/PDFView';
 import Upload from './Components/Upload';
@@ -34,25 +35,13 @@ export default function App () {
 		<Route path="/feedback/comments" component={CommentsDisplay} />
 		<Route path="/login" component={LoginForm} />
 		<Route path='/students/:username/:assId' component={AssignmentLandingPage} />
-		<Route path='/instructors/:username/modules/:moduleName' component={InstructorModuleDetails} />
-		<PrivateRoute path='/students/:username' component={StudentHome} />
+		<Route path='/instructors/:username/modules/:moduleId/assignments/:assignmentId' component={AssignmentEditor} />
+		<Route path='/instructors/:username/modules/:moduleId' component={ModuleDetails} />
 		<PrivateRoute path='/instructors/:username' component={InstructorHome} />
+		<PrivateRoute path='/students/:username' component={StudentHome} />
 		<Route exact path="/" render={() => (<Redirect to="/login" />)} />
 		</Switch>
 		</div>
 		</Router>
 	);
 }
-
-//Below not needed but didn't want to completely delete.
-/*<ul>
-<li><Link to="/peerSubmission">Peer Review Submission Page</Link></li>
-<li><Link to ={{
-  pathname:"/pdfView",
-    docName:"/example.pdf"
-}} className = "nav'link">
-PDF
-</Link>
-</li>
-<li> <Link to="/upload">Upload Page</Link></li>
-</ul>*/
