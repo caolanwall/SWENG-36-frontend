@@ -52,10 +52,7 @@ function AssignmentButton(props){
 
 	return (
 		<button onClick={() => {
-		const newAssId = parseInt(Math.random() * 50);
-		const newAssName = "TEST_NAME";
-		//TODO get assignment name and id from user before redirecting
-		history.push({pathname: location.pathname+'/assignments/' + newAssId, state: {moduleId: location.state.moduleId, moduleName: location.state.moduleName, assignmentId: newAssId, assignmentName: newAssName}});
+		history.push({pathname: location.pathname+'/assignmentsetup/', state: {moduleId: location.state.moduleId, moduleName: location.state.moduleName}});
 		}
 		}>
 			Add Assignment
