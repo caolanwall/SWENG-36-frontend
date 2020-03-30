@@ -14,6 +14,7 @@ class AssignmentEditor extends React.Component {
 			moduleId: this.props.location.state.moduleId,
 			moduleName: this.props.location.state.moduleName,
 			assignmentId: this.props.location.state.assignmentId,
+			assignmentName: this.props.location.state.assignmentName,
 			submissions : [] 
 		};
 	}
@@ -36,15 +37,23 @@ class AssignmentEditor extends React.Component {
 			</Link>
 			<header className="App-header">
 			<h2>
-			Assignments Editor for {this.state.moduleName}
+			Edit assignment {this.state.assignmentName} from module {this.state.moduleName}
 			</h2>
 			</header>
+			<Buttons />
 			<DataTable />
 			</div>
 		);
 	}
 }
 
+function Buttons(props){
+	return (
+		<div>
+		<button onClick={() => alert('Something!')}>Do something</button>
+		</div>
+	);
+}
 
 function parseData(){
 	//TODO actually parse JSON module data

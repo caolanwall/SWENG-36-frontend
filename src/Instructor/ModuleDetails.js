@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import InfoTable, {range, makeData, getRandomDate} from './../Components/InfoTable';
-import {Link} from "react-router-dom";
+import {Link, useHistory, useLocation} from "react-router-dom";
 
 const isLoggedIn = true;
 
@@ -10,7 +10,7 @@ class ModuleDetails extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username : this.props.location.state.username, 	// passed on from the login screen 
+			username : this.props.location.state.username,
 			moduleId : this.props.location.state.moduleId,
 			moduleName: this.props.location.state.moduleName
 		};
@@ -24,7 +24,9 @@ class ModuleDetails extends React.Component {
 			})
 			.catch(err => console.log(err)
 			);
+
 	}
+
 
 	render() {
 		return (
@@ -37,12 +39,29 @@ class ModuleDetails extends React.Component {
 			Module: {this.state.moduleName}
 			</h2>
 			</header>
+			<AssignmentButton moduleId={this.moduleId} moduleName={this.moduleName}/>
 			<DataTable />
 			</div>
 		);
 	}
 }
 
+function AssignmentButton(props){
+	const history = useHistory();
+	const location = useLocation();
+
+	return (
+		<button onClick={() => {
+		const newAssId = parseInt(Math.random() * 50);
+		const newAssName = "TEST_NAME";
+		//TODO get assignment name and id from user before redirecting
+		history.push({pathname: location.pathname+'/assignments/' + newAssId, state: {moduleId: location.state.moduleId, moduleName: location.state.moduleName, assignmentId: newAssId, assignmentName: newAssName}});
+		}
+		}>
+			Add Assignment
+			</button>
+	);
+}
 
 function parseData(){
 	//TODO actually parse JSON module data
@@ -96,7 +115,7 @@ const newAssignment = () => {
 }
 
 function routeToAssignment(history, location, index, cells) {
-	history.push({pathname: location.pathname+'/assignments/' + index, state: {moduleId: this.moduleId, assignmentId: index, moduleName: cells[0].value}});
+	history.push({pathname: location.pathname+'/assignments/' + index, state: {moduleId: location.state.moduleId, assignmentId: index, moduleName: location.state.moduleName, assignmentName: cells[0].value}});
 }
 
 export default ModuleDetails;

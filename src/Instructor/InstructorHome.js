@@ -106,8 +106,9 @@ const newModule = () => {
 }
 
 function routeToModule(history, location, index, cells) {
+	alert('aaaaaaaaaa');
 	//TODO route correctly depending on the assignment stage
-	history.push({pathname: location.pathname+'/modules/' + index, state: {moduleId: index, moduleName: cells[0].value}});
+	history.push({pathname: location.pathname+'/modules/' + index, state: {username: location.state.username, moduleId: index, moduleName: cells[0].value}});
 }
 
 export default InstructorHome;
