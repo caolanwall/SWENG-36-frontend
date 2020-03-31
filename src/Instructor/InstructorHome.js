@@ -10,8 +10,8 @@ class InstructorHome extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username : this.props.location.state.username, 	// passed on from the login screen 
-			modules : [] 						// Array of module container classes 
+			username : this.props.location.state.username, 	// passed on from the login screen
+			modules : [] 						// Array of module container classes
 		};
 	}
 
@@ -96,17 +96,16 @@ const newModule = () => {
 
 	return {
 		name: names[Math.floor(Math.random() * names.length)],
-		title: titles[Math.floor(Math.random() * titles.length)], 
+		title: titles[Math.floor(Math.random() * titles.length)],
 		stage: stages[Math.floor(Math.random() * stages.length)],
 		average: parseFloat(Math.random() * 100).toFixed(2) + '%',
 		submitted: parseFloat(Math.random() * 100).toFixed(2) + '%',
-		dateDue: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(), 
+		dateDue: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(),
 
 	}
 }
 
 function routeToModule(history, location, index, cells) {
-	alert('aaaaaaaaaa');
 	//TODO route correctly depending on the assignment stage
 	history.push({pathname: location.pathname+'/modules/' + index, state: {username: location.state.username, moduleId: index, moduleName: cells[0].value}});
 }
