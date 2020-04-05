@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
 import { Form, Field } from 'react-final-form'
-import Styles from './FormStyle'
+import Styles from '../Components/FormStyle'
 
 const isLoggedIn = true;
 
