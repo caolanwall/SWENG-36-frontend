@@ -1,22 +1,45 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form'
 import Styles from './FormStyle'
-import {Route,Redirect,Link} from "react-router-dom";
+import {Route, Redirect, Link, withRouter} from "react-router-dom";
 import axios from 'axios';
 import {fakeAuth} from './Authentification';
+import Select from 'react-select'
 const bcrypt = require("bcryptjs")
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const onSubmit = async values => {
 	await sleep(300)
-	const data = {username: values.username, role: values.role}
+	const username = values.username
+	const role = values.role.value
+	const data = {username: username, role: role}
 	axios.post("http://localhost:3001/validateUsername", data)
-	.then(result => console.log(result))
-	.catch(err => console.log(err))
-	//TODO from result compare hashes and route to home page
+		.then(result => {
+			console.log("Result:", result)
+			if(result.data.success == true){
+				// check password hash
+				bcrypt.compare(values.password, result.data.hash)
+					.then((res) => {
+						if(res){
+							console.log("Correct password")
+							//TODO route to  homepage
+						} else alert("incorrect password")
+					}
+					)
+			} else alert("couldn't find user/password/role!")
+		}).catch(err => console.log(err))
 }
 
+const roles = [
+	{ value: 'student', label: 'Student' },
+	{ value: 'instructor', label: 'Instructor' }
+]
+
+const ReactSelectAdapter = ({ input, ...rest }) => (
+	<Select {...input} {...rest} />
+
+)
 
 const LoginForm = (props) => (
 	<Styles>
@@ -56,18 +79,11 @@ const LoginForm = (props) => (
 			</div>
 		)}
 		</Field>
-		<Field name="role" initialValue="student" value="student" type="radio">
-		{({ input, meta }) => (
-			<div>
-			<label>Role</label>
-			<input {...input} id="instructor" />
-			<label for="instructor">Instructor</label>
-			<input {...input} id="student" />
-			<label for="student">Student</label>
-			{meta.error && meta.touched && <span>{meta.error}</span>}
-			</div>
-		)}
-		</Field>
+		<div>
+		<label>Role</label>
+		<Field name="role" component={ReactSelectAdapter}
+		defaultValue={roles[0]} options={roles} />
+		</div>
 		<div className="buttons">
 		<button type="submit" disabled={submitting}>
 		Submit
