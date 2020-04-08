@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { withRouter, Redirect, Link, Route} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import PdfStuff from './../Components/PDFView';
 import ReviewYourPeers from './PeerSubmission';

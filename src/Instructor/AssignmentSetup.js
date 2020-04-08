@@ -4,8 +4,6 @@ import {Link} from "react-router-dom";
 import { Form, Field } from 'react-final-form'
 import Styles from '../Components/FormStyle'
 
-const isLoggedIn = true;
-
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const onSubmit = async values => {
@@ -53,7 +51,7 @@ const SetupForm = (props) => (
 		if (!values.document) {
 			errors.document = 'Required'
 		}
-		else if (!values.document.match(".+\.pdf")) {
+		else if (!values.document.match(".+.pdf")) {
 			errors.document = 'PDF Required';
 		}
 		if (!values.dueDate) {

@@ -1,9 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import InfoTable, {range, makeData, getRandomDate} from './../Components/InfoTable';
+import InfoTable, {makeData, getRandomDate} from './../Components/InfoTable';
 import {Link} from "react-router-dom";
-
-const isLoggedIn = true;
 
 class InstructorHome extends React.Component {
 

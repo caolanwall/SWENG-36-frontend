@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useTable } from 'react-table'
-import { withRouter, Redirect, Link, Route, useHistory, useLocation} from "react-router-dom";
+import {Route} from "react-router-dom";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -33,8 +33,6 @@ const Styles = styled.div`
 `
 
 function Table({ columns, data, routeTo }) {
-	const history = useHistory();
-	const location = useLocation();
 	const {
 		getTableProps,
 		getTableBodyProps,
@@ -113,4 +111,4 @@ export function getRandomDate(from, to) {
 	    return new Date(from + Math.random() * (to - from));
 }
 
-export default InfoTable 
+export default InfoTable

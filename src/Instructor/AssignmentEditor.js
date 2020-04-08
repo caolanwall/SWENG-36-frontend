@@ -1,21 +1,19 @@
 import React from 'react';
 import axios from 'axios';
-import InfoTable, {range, makeData, getRandomDate} from './../Components/InfoTable';
+import InfoTable, {makeData, getRandomDate} from './../Components/InfoTable';
 import {Link} from "react-router-dom";
-
-const isLoggedIn = true;
 
 class AssignmentEditor extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			username : this.props.location.state.username, 	
+			username : this.props.location.state.username,
 			moduleId: this.props.location.state.moduleId,
 			moduleName: this.props.location.state.moduleName,
 			assignmentId: this.props.location.state.assignmentId,
 			assignmentName: this.props.location.state.assignmentName,
-			submissions : [] 
+			submissions : []
 		};
 	}
 
@@ -108,11 +106,11 @@ const newModule = () => {
 
 	return {
 		name: names[Math.floor(Math.random() * names.length)],
-		title: titles[Math.floor(Math.random() * titles.length)], 
+		title: titles[Math.floor(Math.random() * titles.length)],
 		stage: stages[Math.floor(Math.random() * stages.length)],
 		average: parseFloat(Math.random() * 100).toFixed(2) + '%',
 		submitted: parseFloat(Math.random() * 100).toFixed(2) + '%',
-		dateDue: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(), 
+		dateDue: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(),
 
 	}
 }

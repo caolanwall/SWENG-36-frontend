@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter, Redirect, Link, Route } from "react-router-dom";
 
 class CommentsDisplay extends Component {
     constructor(props) {

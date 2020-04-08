@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react'
 import { Form, Field } from 'react-final-form'
 import Styles from './FormStyle'
-import {Route, Redirect, Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import axios from 'axios';
 import {authHandler} from './Authentification';
 import Select from 'react-select'
@@ -34,7 +34,7 @@ const LoginForm = (props) => {
 	axios.post("http://localhost:3001/validateUsername", data)
 		.then(result => {
 			console.log("Result:", result)
-			if(result.data.success == true){
+			if(result.data.success){
 				// check password hash
 				bcrypt.compare(values.password, result.data.hash)
 					.then((res) => {

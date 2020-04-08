@@ -1,9 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import InfoTable, {range, makeData, getRandomDate} from './../Components/InfoTable';
+import InfoTable, {makeData, getRandomDate} from './../Components/InfoTable';
 import {Link, useHistory, useLocation} from "react-router-dom";
-
-const isLoggedIn = true;
 
 class ModuleDetails extends React.Component {
 
@@ -107,7 +105,7 @@ const newAssignment = () => {
 		title: titles[Math.floor(Math.random() * titles.length)],
 		instructions: "assignment" + parseInt(Math.random() * 18 + 1) + ".pdf",
 		stage: stages[Math.floor(Math.random() * stages.length)],
-		dueDate: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(), 
+		dueDate: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(),
 	}
 }
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 export const authHandler = {
   isAuthenticated: false,
   authenticate(role, username) {

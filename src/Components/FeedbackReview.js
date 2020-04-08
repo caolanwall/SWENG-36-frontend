@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { useTable } from 'react-table';
+import React from 'react';
 import CommentsDisplay from './CommentsDisplay';
-import { withRouter, Redirect, Link, Route, Switch } from "react-router-dom";
+import { Link} from "react-router-dom";
 import AssignmentLandingPgrade from './../Student/AssignmentHome';
 
 function PDFLinks() {
