@@ -31,7 +31,7 @@ const LoginForm = (props) => {
 	const username = values.username
 	const role = values.role.value
 	const data = {username: username, role: role}
-	axios.post("http://localhost:3001/validateUsername", data)
+	axios.post("http://localhost:3001/auth", data)
 		.then(result => {
 			console.log("Result:", result)
 			if(result.data.success){

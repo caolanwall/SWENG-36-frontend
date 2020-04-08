@@ -1,9 +1,9 @@
 Authentification:
+	Path:			/auth
 	Type: 			post;
-	Triggered by:	clicking 'submit' button on the login screen 
-	Fields: 		[username,
-			 		password_hash];
-
+	Triggered by:	clicking 'submit' button on the login screen
+	Fields: 		[username,role];
+	Returns:		{success, hash}
 
 Assignments overview - student:
 	Type: 			get;
