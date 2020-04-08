@@ -1,15 +1,32 @@
 import React, { Component } from 'react';
 import { Form, Field } from 'react-final-form'
 import Styles from './FormStyle'
-import {Route, Redirect, Link, withRouter} from "react-router-dom";
+import {Route, Redirect, Link, useHistory} from "react-router-dom";
 import axios from 'axios';
-import {fakeAuth} from './Authentification';
+import {authHandler} from './Authentification';
 import Select from 'react-select'
 const bcrypt = require("bcryptjs")
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-const onSubmit = async values => {
+const roles = [
+	{ value: 'student', label: 'Student' },
+	{ value: 'instructor', label: 'Instructor' }
+]
+
+const ReactSelectAdapter = ({ input, ...rest }) => (
+	<Select {...input} {...rest} />
+
+)
+
+const LoginForm = (props) => {
+	const history = useHistory()
+
+	return (
+	<Styles>
+	<h1>reView</h1>
+	<Form
+	onSubmit= {async (values, form, callback) => {
 	await sleep(300)
 	const username = values.username
 	const role = values.role.value
@@ -23,29 +40,18 @@ const onSubmit = async values => {
 					.then((res) => {
 						if(res){
 							console.log("Correct password")
-							//TODO route to  homepage
+							authHandler.authenticate(role, username)
+							history.push({
+									pathname: '/' + role + 's/' + username,
+									state: {username: username}
+							})
 						} else alert("incorrect password")
 					}
 					)
 			} else alert("couldn't find user/password/role!")
 		}).catch(err => console.log(err))
-}
+}}
 
-const roles = [
-	{ value: 'student', label: 'Student' },
-	{ value: 'instructor', label: 'Instructor' }
-]
-
-const ReactSelectAdapter = ({ input, ...rest }) => (
-	<Select {...input} {...rest} />
-
-)
-
-const LoginForm = (props) => (
-	<Styles>
-	<h1>reView</h1>
-	<Form
-	onSubmit={onSubmit}
 	validate={values => {
 		const errors = {}
 		if (!values.username) {
@@ -59,7 +65,8 @@ const LoginForm = (props) => (
 		}
 		return errors
 	}}
-	render={({ handleSubmit, form, submitting, pristine, values }) => (
+	render={({ handleSubmit, form, submitting, pristine, values }) => {
+		return (
 		<form onSubmit={handleSubmit}>
 		<Field name="username">
 		{({ input, meta }) => (
@@ -97,10 +104,10 @@ const LoginForm = (props) => (
 		</button>
 		</div>
 		</form>
-	)}
+	)}}
 	/>
-	</Styles>
-)
+	</Styles>)
+}
 // ====================================================================================
 //function LoginWrapper() {
 //	return (<div align="center">

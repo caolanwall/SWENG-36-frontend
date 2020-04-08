@@ -4,7 +4,6 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Link,
 	Redirect,
 } from "react-router-dom";
 
@@ -21,7 +20,6 @@ import Upload from './Components/Upload';
 import FeedbackReview from './Components/FeedbackReview';
 import CommentsDisplay from './Components/CommentsDisplay';
 import {PrivateRoute} from './routes.js';
-import {AuthButton} from './Components/Authentification';
 
 export default function App () {
 	return (
