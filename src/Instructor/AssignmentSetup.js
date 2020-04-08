@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link} from "react-router-dom";
 import { Form, Field } from 'react-final-form'
 import Styles from '../Components/FormStyle'
+import {LogoutButton} from '../Components/Authentification'
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -25,10 +26,8 @@ class AssignmentSetup extends React.Component {
 
 	render() {
 		return (
-			<div className="AssignmentSetup">
-			<Link to="/login">
-			<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
-			</Link>
+			<div className="AssignmentSetup" align="center">
+			<NavigationBar />
 			<header className="App-header">
 			<h2>
 			</h2>
@@ -38,6 +37,10 @@ class AssignmentSetup extends React.Component {
 		);
 	}
 }
+const NavigationBar = () => (
+	<LogoutButton />
+
+)
 const SetupForm = (props) => (
 	<Styles>
 	<h2>Please enter assignment details for {props.moduleName}:</h2>

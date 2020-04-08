@@ -1,18 +1,23 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import {LogoutButton} from '../Components/Authentification'
 
 export default wrapper;
 
 function wrapper() {
     return (<div align="center">
+		<NavigationBar />
         <Title />
         <PDFLinks/>
         <PeerSubmission />
     </div>
     );
 }
+
+const NavigationBar = () => (
+	<LogoutButton />
+)
 
 function Title(props) {
     return <h1>Peer Review Submissions</h1>;

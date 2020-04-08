@@ -1,15 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import InfoTable, {makeData, getRandomDate} from './../Components/InfoTable';
-import {Link} from "react-router-dom";
+import InfoTable, {makeData, getRandomDate} from '../Components/InfoTable';
+import {LogoutButton} from '../Components/Authentification'
 
 class StudentHome extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			username : this.props.location.state.username, 	// passed on from the login screen
-			modules : [] 						// Array of module container classes
+			username : this.props.location.state.username,
+			modules : []
 		};
 	}
 
@@ -26,10 +26,8 @@ class StudentHome extends React.Component {
 	render() {
 
 		return (
-			<div className="Home">
-			<Link to="/login">
-     			<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
- 			</Link>
+			<div className="Home" align="center">
+			<NavigationBar />
 			<header className="App-header">
 			<h2>
 			Welcome, Student {this.state.username}
@@ -41,7 +39,12 @@ class StudentHome extends React.Component {
 	}
 
 }
-function	parseData(){
+
+const NavigationBar = () => (
+	<LogoutButton />
+)
+
+function parseData(){
 	//TODO actually parse JSON module data
 	return makeData(newModule, Math.random() * 10 + 1);
 }

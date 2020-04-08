@@ -33,10 +33,10 @@ export default function App () {
 		<Route path="/FeedbackReview" component={FeedbackReview} />
 		<Route path="/feedback/comments" component={CommentsDisplay} />
 		<Route path="/login" component={LoginForm} />
-		<Route path='/students/:username/:assId' component={AssignmentLandingPage} />
-		<Route path='/instructors/:username/modules/:moduleId/assignments/:assignmentId' component={AssignmentEditor} />
-		<Route path='/instructors/:username/modules/:moduleId/assignmentsetup' component={AssignmentSetup} />
-		<Route path='/instructors/:username/modules/:moduleId' component={ModuleDetails} />
+		<PrivateRoute path='/students/:username/:assId' component={AssignmentLandingPage} />
+		<PrivateRoute path='/instructors/:username/modules/:moduleId/assignments/:assignmentId' component={AssignmentEditor} />
+		<PrivateRoute path='/instructors/:username/modules/:moduleId/assignmentsetup' component={AssignmentSetup} />
+		<PrivateRoute path='/instructors/:username/modules/:moduleId' component={ModuleDetails} />
 		<PrivateRoute path='/instructors/:username' component={InstructorHome} />
 		<PrivateRoute path='/students/:username' component={StudentHome} />
 		<Route exact path="/" render={() => (<Redirect to="/login" />)} />

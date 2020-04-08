@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import InfoTable, {makeData, getRandomDate} from './../Components/InfoTable';
 import {Link} from "react-router-dom";
+import {LogoutButton} from '../Components/Authentification'
 
 class AssignmentEditor extends React.Component {
 
@@ -29,10 +30,8 @@ class AssignmentEditor extends React.Component {
 
 	render() {
 		return (
-			<div className="AssignmentEditor">
-			<Link to="/login">
-			<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
-			</Link>
+			<div className="AssignmentEditor" align="center">
+			<NavigationBar />
 			<header className="App-header">
 			<h2>
 			Edit assignment {this.state.assignmentName} from module {this.state.moduleName}
@@ -45,6 +44,10 @@ class AssignmentEditor extends React.Component {
 	}
 }
 
+const NavigationBar = () => (
+	<LogoutButton />
+
+)
 function Buttons(props){
 	return (
 		<div>

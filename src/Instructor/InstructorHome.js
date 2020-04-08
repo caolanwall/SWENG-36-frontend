@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import InfoTable, {makeData, getRandomDate} from './../Components/InfoTable';
-import {Link} from "react-router-dom";
+import {LogoutButton} from '../Components/Authentification'
 
 class InstructorHome extends React.Component {
 
@@ -25,10 +25,8 @@ class InstructorHome extends React.Component {
 
 	render() {
 		return (
-			<div className="InstructorHome">
-			<Link to="/login">
-			<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
-			</Link>
+			<div className="InstructorHome" align="center">
+			<NavigationBar />
 			<header className="App-header">
 			<h2>
 			Welcome Home, Instructor {this.state.username}
@@ -40,6 +38,10 @@ class InstructorHome extends React.Component {
 	}
 }
 
+const NavigationBar = () => (
+	<LogoutButton />
+
+)
 
 function parseData(){
 	//TODO actually parse JSON module data

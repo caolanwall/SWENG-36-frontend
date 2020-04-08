@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import InfoTable, {makeData, getRandomDate} from './../Components/InfoTable';
 import {Link, useHistory, useLocation} from "react-router-dom";
+import {LogoutButton} from '../Components/Authentification'
 
 class ModuleDetails extends React.Component {
 
@@ -28,10 +29,8 @@ class ModuleDetails extends React.Component {
 
 	render() {
 		return (
-			<div className="InstructorHome">
-			<Link to="/login">
-			<button type="button" onClick={() => alert('Logging out!')}> Log out </button>
-			</Link>
+			<div className="InstructorHome" align="center">
+			<NavigationBar />
 			<header className="App-header">
 			<h2>
 			Module: {this.state.moduleName}
@@ -43,6 +42,11 @@ class ModuleDetails extends React.Component {
 		);
 	}
 }
+
+const NavigationBar = () => (
+	<LogoutButton />
+
+)
 
 function AssignmentButton(props){
 	const history = useHistory();
