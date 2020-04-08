@@ -1,14 +1,16 @@
 Authentification:
 	Path:			/auth
-	Type: 			post;
+	Type: 			POST
 	Triggered by:	clicking 'submit' button on the login screen
 	Fields: 		[username,role];
-	Returns:		{success, hash}
+	Returns:		{success, hash, id}
 
 Assignments overview - student:
-	Type: 			get;
+	Path:			/user
+	Type: 			GET
 	Triggered by:	entering the home screen, if user is a student;
-	Fields:			*[assignment_1, assignment_2 ...];
+	Fields:			[id]
+	Returns:		{user}
 
 
 Assignments overview - instructor:

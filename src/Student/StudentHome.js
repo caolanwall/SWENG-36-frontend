@@ -7,18 +7,23 @@ class StudentHome extends React.Component {
 
 	constructor(props) {
 		super(props);
+		console.log("Constructor", this.props)
 		this.state = {
 			username : this.props.location.state.username,
-			modules : []
+			id: this.props.location.state.id,
+			assignments : []
 		};
 	}
 
+	//TODO Because of the way the data is stored, we want to get modules from user, then all assignments for each of those modules, and display them in table
+
 	componentDidMount() {
-		let url = '127.0.0.1:8001/users/' + this.username + '/modules';
+		const url = 'http://localhost:3001/user?id=' + this.state.id;
 		axios.get(url, {headers : {'crossDomain' : true, 'Content-type' : 'application/json'}})
 			.then(res => {
-				this.setState({modules : res.data})
-			})
+				this.setState({	assignments : res.data.data[0].assignments})
+			}
+			)
 			.catch(err => console.log(err)
 			);
 	}
@@ -33,7 +38,7 @@ class StudentHome extends React.Component {
 			Welcome, Student {this.state.username}
 			</h2>
 			</header>
-			<DataTable />
+			<DataTable assignments={this.state.assignments}/>
 			</div>
 		);
 	}
@@ -44,53 +49,27 @@ const NavigationBar = () => (
 	<LogoutButton />
 )
 
-function parseData(){
-	//TODO actually parse JSON module data
-	return makeData(newModule, Math.random() * 10 + 1);
+function parseData(props){
+	return props.assignments.map(name => {
+			return {name: name}
+		})
 }
 
-function DataTable(){
+function DataTable(props){
 	const columns = React.useMemo(
 		() => [
 			{
-				Header: 'Modules',
-				columns: [
-					{
-						Header: 'Name',
-						accessor: 'name',
-					},
-					{
-						Header: 'Title',
-						accessor: 'title',
-					},
-					{
-						Header: 'Stage',
-						accessor: 'stage',
-					},
-					{
-						Header: 'Date Due',
-						accessor: 'dateDue',
-					},
-				],
+				Header: 'Assignments',
+				accessor: 'name'
 			},
 		],
 		[]
 	)
 
-	const data = React.useMemo(() => parseData(), [])
+	const data = React.useMemo(
+		() => parseData({assignments: props.assignments}), [props])
 
 	return <InfoTable columns={columns} data={data} routeTo={routeToAssignment}/>;
-}
-const newModule = () => {
-	const names = ["Mathematics", "Introduction to Programming", "Programming Project I", "Introduction to Computing I", "Introduction to Computing II", "Electrotechonology", "Digital Logic Design", "Telecommunications I", "Computers and Society", "Algorithms and Data Structures", "Systems Programming I", "Computer Architecture I", "Information Management I", "Concurrent Systems", "Operating Systems", "Microprocessor Systems", "Telecommunications II", "Discrete Mathematics"];
-	const titles = ["Simple adding", "Matrix multiplication", "Full adder", "Graphs", "Threads", "Presentation", "Report", "Validation", "Memory", "Processor", "Input Output", "Interrupts", "Polling", "Sets", "Frogs", "Bit Fields", "Printing", "Graphics", "Calculator", "Queries", "Resistors", "Multiplexing"];
-	const stages = ["Not Started", "First Submission", "Peer Review", "Final Submission", "Complete"];
-	return {
-		name: names[Math.floor(Math.random() * names.length)],
-		title: titles[Math.floor(Math.random() * titles.length)],
-		stage: stages[Math.floor(Math.random() * stages.length)],
-		dateDue: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(),
-	}
 }
 
 function routeToAssignment(history, location, index, cells) {

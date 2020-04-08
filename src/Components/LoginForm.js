@@ -43,7 +43,9 @@ const LoginForm = (props) => {
 							authHandler.authenticate(role, username)
 							history.push({
 									pathname: '/' + role + 's/' + username,
-									state: {username: username}
+									state: {username: username,
+											id: result.data.id
+										}
 							})
 						} else alert("incorrect password")
 					}
