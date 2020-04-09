@@ -15,7 +15,7 @@ const LoginForm = (props) => {
 	<Styles>
 	<h1>reView</h1>
 	<Form
-	onSubmit= {async (values, form, callback) => {
+	onSubmit= {async values => {
 	await sleep(300)
 	const username = values.username
 	const role = values.role
@@ -52,7 +52,6 @@ const LoginForm = (props) => {
 			errors.password = 'Required'
 		}
 		if (!values.role) {
-			console.log("Validating role", values)
 			errors.role = 'Required'
 		}
 		return errors
@@ -84,7 +83,7 @@ const LoginForm = (props) => {
 			<label>Role</label>
 			<select {...input}>
 				<option value="student">Student</option>
-				<option value="instructor" selected>Instructor</option>
+				<option value="instructor">Instructor</option>
 			</select>
 			{meta.error && meta.touched && <span>{meta.error}</span>}
 			</div>

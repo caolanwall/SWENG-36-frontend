@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import InfoTable, {makeData, getRandomDate} from './../Components/InfoTable';
 import {LogoutButton} from '../Components/Authentification'
+import {Link} from "react-router-dom"
 
 class InstructorHome extends React.Component {
 
@@ -38,9 +39,21 @@ class InstructorHome extends React.Component {
 	}
 }
 
-const NavigationBar = () => (
-	<LogoutButton />
+const AddModule = () => (
+	<Link to={location => ({
+		pathname: location.pathname + "/addmodule",
+		state: { username: location.state.username }
+	})} >
+		<button>Add Module</button>
+	</Link>
+)
 
+
+const NavigationBar = () => (
+	<div>
+	<LogoutButton />
+	<AddModule />
+	</div>
 )
 
 function parseData(){

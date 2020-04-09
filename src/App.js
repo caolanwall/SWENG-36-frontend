@@ -14,6 +14,7 @@ import InstructorHome from './Instructor/InstructorHome';
 import ModuleDetails from './Instructor/ModuleDetails';
 import AssignmentEditor from './Instructor/AssignmentEditor';
 import AssignmentSetup from './Instructor/AssignmentSetup';
+import ModuleSetup from './Instructor/ModuleSetup';
 import PeerSubmission from './Student/PeerSubmission';
 import PDFView from './Components/PDFView';
 import Upload from './Components/Upload';
@@ -34,6 +35,7 @@ export default function App () {
 		<Route path="/feedback/comments" component={CommentsDisplay} />
 		<Route path="/login" component={LoginForm} />
 		<PrivateRoute path='/students/:username/:assId' component={AssignmentLandingPage} />
+		<PrivateRoute path='/instructors/:username/addmodule' component={ModuleSetup} />
 		<PrivateRoute path='/instructors/:username/modules/:moduleId/assignments/:assignmentId' component={AssignmentEditor} />
 		<PrivateRoute path='/instructors/:username/modules/:moduleId/assignmentsetup' component={AssignmentSetup} />
 		<PrivateRoute path='/instructors/:username/modules/:moduleId' component={ModuleDetails} />
