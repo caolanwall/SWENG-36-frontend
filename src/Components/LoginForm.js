@@ -4,20 +4,9 @@ import Styles from './FormStyle'
 import {useHistory} from "react-router-dom";
 import axios from 'axios';
 import {authHandler} from './Authentification';
-import Select from 'react-select'
 const bcrypt = require("bcryptjs")
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
-const roles = [
-	{ value: 'student', label: 'Student' },
-	{ value: 'instructor', label: 'Instructor' }
-]
-
-const ReactSelectAdapter = ({ input, ...rest }) => (
-	<Select {...input} {...rest} />
-
-)
 
 const LoginForm = (props) => {
 	const history = useHistory()
@@ -29,7 +18,7 @@ const LoginForm = (props) => {
 	onSubmit= {async (values, form, callback) => {
 	await sleep(300)
 	const username = values.username
-	const role = values.role.value
+	const role = values.role
 	const data = {username: username, role: role}
 	axios.post("http://localhost:3001/auth", data)
 		.then(result => {
@@ -63,6 +52,7 @@ const LoginForm = (props) => {
 			errors.password = 'Required'
 		}
 		if (!values.role) {
+			console.log("Validating role", values)
 			errors.role = 'Required'
 		}
 		return errors
@@ -88,11 +78,18 @@ const LoginForm = (props) => {
 			</div>
 		)}
 		</Field>
-		<div>
-		<label>Role</label>
-		<Field name="role" component={ReactSelectAdapter}
-		defaultValue={roles[0]} options={roles} />
-		</div>
+		<Field name="role" defaultValue="student">
+		{({ input, meta }) => (
+			<div>
+			<label>Role</label>
+			<select {...input}>
+				<option value="student">Student</option>
+				<option value="instructor" selected>Instructor</option>
+			</select>
+			{meta.error && meta.touched && <span>{meta.error}</span>}
+			</div>
+		)}
+		</Field>
 		<div className="buttons">
 		<button type="submit" disabled={submitting}>
 		Submit
@@ -110,146 +107,4 @@ const LoginForm = (props) => {
 	/>
 	</Styles>)
 }
-// ====================================================================================
-//function LoginWrapper() {
-//	return (<div align="center">
-//		<Title />
-//		<LoginForm />
-//		</div>
-//	);
-//}
-//
-//function Title(props) {
-//	return <h1>reView</h1>;
-//}
-//
-//class LoginForm extends Component {
-//	constructor(props) {
-//		super(props);
-//		this.state = {username: '', password: '', role: "student", redirectToReferrer: false};
-//
-//		this.handleUsernameChange = this.handleUsernameChange.bind(this);
-//		this.handlePasswordChange = this.handlePasswordChange.bind(this);
-//		this.handleOptionChange = this.handleOptionChange.bind(this);
-//		this.handleSubmit = this.handleSubmit.bind(this);
-//		this.handleReset = this.handleReset.bind(this);
-//	}
-//
-//	resetState(){
-//		this.setState({username: '', password: '', role: "student", redirectToReferrer: false});
-//	}
-//
-//	handleUsernameChange(event) {
-//		this.setState({
-//			username: event.target.value});
-//	}
-//	handlePasswordChange(event) {
-//		this.setState({password: event.target.value});
-//	}
-//
-//	handleOptionChange = changeEvent => {
-//		this.setState({
-//			role: changeEvent.target.value
-//		});
-//	};
-//
-//	handleReset(event) {
-//		event.preventDefault();
-//		this.resetState();
-//	}
-//
-//	doLogin = (data) => {
-//		bcrypt.genSalt(10, function(err, salt) {
-//			bcrypt.hash(data.password, salt, function(err, hash) {
-//				data.password = hash;
-//				axios.post(
-//					"http://localhost:3001/auth", data)
-//					.then(res => console.log(res))
-//					.catch(err => console.log(err)
-//					);
-//			});
-//		});
-///*
-//		this.setState({redirectToReferrer: true})
-//		//TODO actually check with backend if user exists and is allowed to view page
-//		fakeAuth.authenticate(() => {
-//			this.setState({
-//				redirectToReferrer: true
-//			})
-//		})*/
-//	}
-//
-//	handleSubmit(event) {
-//		event.preventDefault();
-//		const data = {
-//			username: this.state.username,
-//			password: this.state.password,
-//			role: this.state.role
-//		};
-//
-//		this.doLogin(data);
-//	}
-//
-//	render() {
-//		const redirectToReferrer = this.state.redirectToReferrer;
-//		const currentLoginType = this.state.role;
-//
-//		if (redirectToReferrer === true) {
-//			if(currentLoginType === "student") {
-//				return <Redirect to={{
-//					pathname: '/students/'+this.state.username,
-//						state: { username: this.state.username }
-//				}} />
-//			} else if (currentLoginType === "instructor") {
-//				return <Redirect to={{
-//					pathname: "/instructors/"+this.state.username,
-//						state: { username: this.state.username }
-//				}} />
-//			}
-//		}
-//		return (
-//			<form onSubmit={this.handleSubmit}>
-//			<div>
-//			<div> Username: </div>
-//			<input type="text" value={this.state.username} onChange={this.handleUsernameChange} />
-//			</div>
-//			<div>
-//			<div> Password: </div>
-//			<input type="password" value={this.state.password} onChange={this.handlePasswordChange} />
-//			</div>
-//
-//			<div className="form-check">
-//			<label>
-//			<input
-//			type="radio"
-//			name="role"
-//			value="student"
-//			checked={this.state.role === "student"}
-//			onChange={this.handleOptionChange}
-//			className="form-check-input"
-//			/>
-//			Student
-//			</label>
-//			</div>
-//
-//			<div className="form-check">
-//			<label>
-//			<input
-//			type="radio"
-//			name="role"
-//			value="instructor"
-//			checked={this.state.role === "instructor"}
-//			onChange={this.handleOptionChange}
-//			className="form-check-input"
-//			/>
-//			Instructor
-//			</label>
-//			</div>
-//			<button onClick={this.handleReset}> Reset </button> {" "}
-//			<input type="submit" value="Submit"/>
-//			</form>
-//		);
-//	}
-//}
-//
 export default LoginForm;
