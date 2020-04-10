@@ -7,25 +7,38 @@ class StudentHome extends React.Component {
 
 	constructor(props) {
 		super(props);
-		console.log("Constructor", this.props)
 		this.state = {
 			username : this.props.location.state.username,
 			id: this.props.location.state.id,
+			modules: this.props.location.state.modules,
 			assignments : []
 		};
 	}
 
-	//TODO Because of the way the data is stored, we want to get modules from user, then all assignments for each of those modules, and display them in table
-
 	componentDidMount() {
-		const url = 'http://localhost:3001/user?id=' + this.state.id;
-		axios.get(url, {headers : {'crossDomain' : true, 'Content-type' : 'application/json'}})
-			.then(res => {
-				this.setState({	assignments : res.data.data[0].assignments})
-			}
-			)
-			.catch(err => console.log(err)
-			);
+		//Get the user by Id
+		axios.get('http://localhost:3001/user?id=' + this.state.id)
+			.then( postres => {
+				console.log("postes", postres)
+				const user = postres.data.data[0]
+				this.setState({ modules: user.modules})
+				//GET all assignments for all modules taken by student
+				this.state.modules.forEach( module => {
+					const url = "http://localhost:3001/assignment?module=" + module
+					axios.get(url,
+						{headers : {'crossDomain' : true,
+							'Content-type' : 'application/json'}})
+						.then( res => {
+							console.log("Getting assignments for", module, res)
+							if(res.data.data != null){
+								const as = this.state.assignments
+								as.push(...res.data.data)
+								this.setState({ assignments: as	})
+							}
+						}
+						)
+				})
+			})
 	}
 
 	render() {
@@ -50,24 +63,61 @@ const NavigationBar = () => (
 )
 
 function parseData(props){
-	return props.assignments.map(name => {
-			return {name: name}
-		})
+	return props.assignments.map(assignment => {
+		let cloned = objectMap(assignment, a => a)
+		cloned.key = cloned._id
+		return cloned
+	})
 }
+
+const objectMap = (obj, fn) =>
+	  Object.fromEntries(
+		      Object.entries(obj).map(
+				        ([k, v], i) => [k, fn(v, k, i)]
+				      )
+		    )
+
+
 
 function DataTable(props){
 	const columns = React.useMemo(
 		() => [
 			{
 				Header: 'Assignments',
-				accessor: 'name'
+				columns: [
+					{
+						Header: 'Title',
+						accessor: 'title',
+					},
+					{
+						Header: 'Module',
+						accessor: 'module_Code',
+					},
+					{
+						Header: 'Description',
+						accessor: 'description',
+					},
+					{
+						Header: 'Review Count',
+						accessor: 'review_Count',
+					},
+					{
+						Header: 'Draft Start',
+						accessor: 'draft_Start',
+					},
+					{
+						Header: 'Draft End',
+						accessor: 'draft_End',
+					},
+					//TODO add all other relevant fields
+				],
 			},
 		],
 		[]
 	)
 
-	const data = React.useMemo(
-		() => parseData({assignments: props.assignments}), [props])
+	console.log("Assignments", props.assignments)
+	const data = React.useMemo(() => parseData({assignments: props.assignments}), [props])
 
 	return <InfoTable columns={columns} data={data} routeTo={routeToAssignment}/>;
 }
