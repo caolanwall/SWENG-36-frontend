@@ -36,7 +36,6 @@ class ModuleDetails extends React.Component {
 			Module: {this.state.moduleName}
 			</h2>
 			</header>
-			<AssignmentButton moduleId={this.moduleId} moduleName={this.moduleName}/>
 			<DataTable />
 			</div>
 		);
@@ -45,22 +44,7 @@ class ModuleDetails extends React.Component {
 
 const NavigationBar = () => (
 	<LogoutButton />
-
 )
-
-function AssignmentButton(props){
-	const history = useHistory();
-	const location = useLocation();
-
-	return (
-		<button onClick={() => {
-		history.push({pathname: location.pathname+'/assignmentsetup/', state: {moduleId: location.state.moduleId, moduleName: location.state.moduleName}});
-		}
-		}>
-			Add Assignment
-			</button>
-	);
-}
 
 function parseData(){
 	//TODO actually parse JSON module data

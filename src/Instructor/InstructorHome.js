@@ -21,7 +21,6 @@ class InstructorHome extends React.Component {
 		//Get the user by Id
 		axios.get('http://localhost:3001/user?id=' + this.state.id)
 			.then( postres => {
-				console.log("postes", postres)
 				const user = postres.data.data[0]
 				this.setState({ modules: user.modules})
 				//GET all assignments for all modules
@@ -63,7 +62,7 @@ class InstructorHome extends React.Component {
 	render() {
 		return (
 			<div className="InstructorHome" align="center">
-			<NavigationBar />
+			<NavigationBar modules={this.state.modules}/>
 			<header className="App-header">
 			<h2>
 			Welcome Home, Instructor {this.state.username}
@@ -86,11 +85,23 @@ const AddModule = () => (
 	</Link>
 )
 
+const AddAssignment = (props) => (
+	<Link to={location => ({
+		pathname: location.pathname + '/addassignment',
+		state: { username: location.state.username,
+				id: location.state.id,
+				modules: props.modules
+		}
+	})} >
+	<button>Add Assignment</button>
+	</Link>
+)
 
-const NavigationBar = () => (
+const NavigationBar = (props) => (
 	<div>
 	<LogoutButton />
 	<AddModule />
+	<AddAssignment modules={props.modules}/>
 	</div>
 )
 

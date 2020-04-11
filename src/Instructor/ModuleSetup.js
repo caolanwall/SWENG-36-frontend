@@ -8,7 +8,6 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const ModuleSetupForm = (props) => {
 
-
 	const [students, setStudents] = useState([])
 	const [instructors, setInstructors] = useState([])
 	const [username, setUsername] = useState(props.location.state.username)
