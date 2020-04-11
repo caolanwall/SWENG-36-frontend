@@ -63,21 +63,44 @@ const NavigationBar = () => (
 )
 
 function parseData(props){
-	return props.assignments.map(assignment => {
-		let cloned = objectMap(assignment, a => a)
-		cloned.key = cloned._id
-		return cloned
+	return props.assignments.map(a => {
+		// Calculate current stage
+		const now = Date.now()
+		const dates = [
+			{ date: Date.parse(a.final_End), value: "Final Ended" },
+			{ date: Date.parse(a.final_Start), value: "Final" },
+			{ date: Date.parse(a.review_End), value: "Review Ended" },
+			{ date: Date.parse(a.review_Start), value: "Review" },
+			{ date: Date.parse(a.draft_End), value: "Draft Ended" },
+			{ date: Date.parse(a.draft_Start), value: "Draft" },
+			{ date: now, value: "Not Started" }
+		]
+
+		let currentStage, nextStage
+		for(let i = 0; i < dates.length; i++){
+			const found = dates[i]
+			if(now >= found.date){
+				currentStage = found
+				if(i > 0)
+					nextStage = dates[i-1]
+				else
+					nextStage = { date: "Never", value: "Done" }
+				break
+			}
+		}
+
+		const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }
+
+		return {
+		key: a._id,
+		title: a.title,
+		module_Code: a.module_Code,
+		description: a.description,
+		stage: currentStage.value,
+		stage_End: new Date(nextStage.date).toLocaleTimeString('en-IE', options)
+		}
 	})
 }
-
-const objectMap = (obj, fn) =>
-	  Object.fromEntries(
-		      Object.entries(obj).map(
-				        ([k, v], i) => [k, fn(v, k, i)]
-				      )
-		    )
-
-
 
 function DataTable(props){
 	const columns = React.useMemo(
@@ -98,18 +121,13 @@ function DataTable(props){
 						accessor: 'description',
 					},
 					{
-						Header: 'Review Count',
-						accessor: 'review_Count',
+						Header: 'Stage',
+						accessor: 'stage',
 					},
 					{
-						Header: 'Draft Start',
-						accessor: 'draft_Start',
+						Header: 'Stage End',
+						accessor: 'stage_End',
 					},
-					{
-						Header: 'Draft End',
-						accessor: 'draft_End',
-					},
-					//TODO add all other relevant fields
 				],
 			},
 		],
