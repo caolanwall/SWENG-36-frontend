@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import InfoTable, {makeData, getRandomDate} from './../Components/InfoTable';
+import InfoTable from './../Components/InfoTable';
 import {LogoutButton} from '../Components/Authentification'
 import {Link} from "react-router-dom"
 
@@ -9,19 +9,55 @@ class InstructorHome extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username : this.props.location.state.username, 	// passed on from the login screen
-			modules : [] 						// Array of module container classes
+			username : this.props.location.state.username,
+			id: this.props.location.state.id,
+			modules: [],
+			assignments: [],
+			studentsPerModule: []
 		};
 	}
 
 	componentDidMount() {
-		let url = 'localhost:3000/instructors/' + this.username + '/modules';
-		axios.get(url, {headers : {'crossDomain' : true, 'Content-type' : 'application/json'}})
-			.then(res => {
-				this.setState({modules : res.data})
+		//Get the user by Id
+		axios.get('http://localhost:3001/user?id=' + this.state.id)
+			.then( postres => {
+				console.log("postes", postres)
+				const user = postres.data.data[0]
+				this.setState({ modules: user.modules})
+				//GET all assignments for all modules
+				this.state.modules.forEach( module => {
+					// Get all assignments for this module
+					axios.get("http://localhost:3001/assignment?module=" + module,
+						{headers : {'crossDomain' : true,
+							'Content-type' : 'application/json'}})
+						.then( res => {
+							console.log("Getting assignments for", module, res)
+							if(res.data.data != null){
+								const as = this.state.assignments
+								as.push(...res.data.data)
+								this.setState({ assignments: as	})
+							}
+						}
+						)
+
+					// Get all students that take this module
+					axios.get("http://localhost:3001/user?module=" + module,
+						{headers : {'crossDomain' : true,
+							'Content-type' : 'application/json'}})
+						.then( res => {
+							console.log("Getting students for", module, res)
+							if(res.data.data != null){
+								const index = this.state.modules.indexOf(module)
+								const spm = this.state.studentsPerModule
+								spm[index] = res.data.data
+								this.setState({
+									studentsPerModule: spm	})
+							}
+						}
+						)
+
+				})
 			})
-			.catch(err => console.log(err)
-			);
 	}
 
 	render() {
@@ -33,7 +69,8 @@ class InstructorHome extends React.Component {
 			Welcome Home, Instructor {this.state.username}
 			</h2>
 			</header>
-			<DataTable />
+			<DataTable assignments={this.state.assignments}
+				studentsPerModule={this.state.studentsPerModule}/>
 			</div>
 		);
 	}
@@ -42,7 +79,8 @@ class InstructorHome extends React.Component {
 const AddModule = () => (
 	<Link to={location => ({
 		pathname: location.pathname + "/addmodule",
-		state: { username: location.state.username }
+		state: { username: location.state.username,
+				id: location.state.id }
 	})} >
 		<button>Add Module</button>
 	</Link>
@@ -56,40 +94,77 @@ const NavigationBar = () => (
 	</div>
 )
 
-function parseData(){
-	//TODO actually parse JSON module data
-	return makeData(newModule, Math.random() * 20 + 1);
+function parseData(props){
+	return props.assignments.map(a => {
+		// Calculate current stage
+		const now = Date.now()
+		const dates = [
+			{ date: Date.parse(a.final_End), value: "Final Ended" },
+			{ date: Date.parse(a.final_Start), value: "Final" },
+			{ date: Date.parse(a.review_End), value: "Review Ended" },
+			{ date: Date.parse(a.review_Start), value: "Review" },
+			{ date: Date.parse(a.draft_End), value: "Draft Ended" },
+			{ date: Date.parse(a.draft_Start), value: "Draft" },
+			{ date: now, value: "Not Started" }
+		]
+
+		let currentStage, nextStage
+		for(let i = 0; i < dates.length; i++){
+			const found = dates[i]
+			if(now >= found.date){
+				currentStage = found
+				if(i > 0)
+					nextStage = dates[i-1]
+				else
+					nextStage = { date: "Never", value: "Done" }
+				break
+			}
+		}
+
+		const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }
+
+		return {
+		key: a._id,
+		title: a.title,
+		module_Code: a.module_Code,
+		description: a.description,
+		students: props.studentsPerModule[
+			props.assignments.indexOf(a)].length,
+		stage: currentStage.value,
+		stage_End: new Date(nextStage.date).toLocaleTimeString('en-IE', options)
+		}
+	})
 }
 
-function DataTable(){
+function DataTable(props){
 	const columns = React.useMemo(
 		() => [
 			{
-				Header: 'Modules',
+				Header: 'Assignments',
 				columns: [
-					{
-						Header: 'Name',
-						accessor: 'name',
-					},
 					{
 						Header: 'Title',
 						accessor: 'title',
+					},
+					{
+						Header: 'Module',
+						accessor: 'module_Code',
+					},
+					{
+						Header: 'Description',
+						accessor: 'description',
+					},
+					{
+						Header: 'Students',
+						accessor: 'students',
 					},
 					{
 						Header: 'Stage',
 						accessor: 'stage',
 					},
 					{
-						Header: 'Average',
-						accessor: 'average',
-					},
-					{
-						Header: 'Submitted',
-						accessor: 'submitted',
-					},
-					{
-						Header: 'Date Due',
-						accessor: 'dateDue',
+						Header: 'Stage End',
+						accessor: 'stage_End',
 					},
 				],
 			},
@@ -97,29 +172,12 @@ function DataTable(){
 		[]
 	)
 
-	const data = React.useMemo(() => parseData(), [])
+	const data = React.useMemo(() => parseData(props), [props])
 
-	return <InfoTable columns={columns} data={data} routeTo={routeToModule}/>;
+	return <InfoTable columns={columns} data={data} routeTo={routeToAssignment}/>;
 }
 
-const newModule = () => {
-	const names = ["Mathematics", "Introduction to Programming", "Programming Project I", "Introduction to Computing I", "Introduction to Computing II", "Electrotechonology", "Digital Logic Design", "Telecommunications I", "Computers and Society", "Algorithms and Data Structures", "Systems Programming I", "Computer Architecture I", "Information Management I", "Concurrent Systems", "Operating Systems", "Microprocessor Systems", "Telecommunications II", "Discrete Mathematics"];
-	const titles = ["Simple adding", "Matrix multiplication", "Full adder", "Graphs", "Threads", "Presentation", "Report", "Validation", "Memory", "Processor", "Input Output", "Interrupts", "Polling", "Sets", "Frogs", "Bit Fields", "Printing", "Graphics", "Calculator", "Queries", "Resistors", "Multiplexing"];
-	const stages = ["Not Started", "First Submission", "Peer Review", "Final Submission", "Complete"];
-
-	return {
-		name: names[Math.floor(Math.random() * names.length)],
-		title: titles[Math.floor(Math.random() * titles.length)],
-		stage: stages[Math.floor(Math.random() * stages.length)],
-		average: parseFloat(Math.random() * 100).toFixed(2) + '%',
-		submitted: parseFloat(Math.random() * 100).toFixed(2) + '%',
-		dateDue: getRandomDate(new Date("2020-03-17"), new Date("2020-04-15")).toLocaleDateString(),
-
-	}
-}
-
-function routeToModule(history, location, index, cells) {
-	//TODO route correctly depending on the assignment stage
+function routeToAssignment(history, location, index, cells) {
 	history.push({pathname: location.pathname+'/modules/' + index, state: {username: location.state.username, moduleId: index, moduleName: cells[0].value}});
 }
 

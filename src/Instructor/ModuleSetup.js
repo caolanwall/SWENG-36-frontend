@@ -12,6 +12,7 @@ const ModuleSetupForm = (props) => {
 	const [students, setStudents] = useState([])
 	const [instructors, setInstructors] = useState([])
 	const [username, setUsername] = useState(props.location.state.username)
+	const [id, setId] = useState(props.location.state.id)
 
 	const history = useHistory()
 
@@ -58,7 +59,7 @@ const ModuleSetupForm = (props) => {
 
 			//Done, redirect back
 			history.push({ pathname: '/instructors/' + username,
-				state: { username: username } } );
+				state: { username: username, id: id } } );
 		}}
 
 		validate={values => {

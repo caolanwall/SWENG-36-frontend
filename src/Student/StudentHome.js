@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import InfoTable, {makeData, getRandomDate} from '../Components/InfoTable';
+import InfoTable  from '../Components/InfoTable';
 import {LogoutButton} from '../Components/Authentification'
 
 class StudentHome extends React.Component {
@@ -134,7 +134,6 @@ function DataTable(props){
 		[]
 	)
 
-	console.log("Assignments", props.assignments)
 	const data = React.useMemo(() => parseData({assignments: props.assignments}), [props])
 
 	return <InfoTable columns={columns} data={data} routeTo={routeToAssignment}/>;
