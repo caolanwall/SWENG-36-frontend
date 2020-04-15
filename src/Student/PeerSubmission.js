@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {LogoutButton} from '../Components/Authentification'
 
+const FileDownload = require('js-file-download');
+
 export default wrapper;
 
 function wrapper() {
@@ -36,13 +38,13 @@ function PDFLinks(){
         </Link>
         </div>
         <div>
-        <Link to={{
+        {/*}<Link to={{
             pathname:"/pdfView",
             docName:"/CompMathsAss1V3.pdf"
 
         }}>
             Submission to be marked
-        </Link>
+        </Link>*/}
         </div>
     </React.Fragment>
   );
@@ -111,8 +113,44 @@ class PeerSubmission extends React.Component {
 
     };
 
+    fileDownloadHandler = () => {
+      axios({
+        //Below url needs to not be hardcoded in - also must be filename not id
+          url: 'http://localhost:5001/files/51579f1c26ee9b424fd0fd857d7dcd19.pdf',
+          method: 'GET',
+          responseType: 'blob' //Force to receive data in a Blob Format
+      })
+      .then(response => {
+      //Create a Blob from the PDF Stream
+          const file = new Blob(
+            [response.data],
+            {type: 'application/pdf'});
+      //Build a URL from the file
+          const fileURL = URL.createObjectURL(file);
+          console.log(fileURL);
+          //Open the URL on new Window
+          //window.open(fileURL);
+          const link = document.createElement('a');
+          link.href = fileURL;
+          link.setAttribute('download', file);
+
+          if (typeof link.download === 'undefined') {
+            link.setAttribute('target', '_blank');
+        }
+          document.body.appendChild(link);
+          link.click();
+      })
+      .catch(error => {
+          console.log(error);
+      });
+    }
+
     render() {
         return (
+          <div>
+          <div >
+              <button onClick={this.fileDownloadHandler}> Download </button>
+          </div>
             <form onSubmit={this.handleSubmit}>
                 <div>
                     <textarea value={this.state.value}
@@ -139,6 +177,7 @@ class PeerSubmission extends React.Component {
 
                 <button type="submit">submit</button>
             </form>
+            </div>
         );
     }
 }

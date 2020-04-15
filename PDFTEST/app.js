@@ -121,33 +121,6 @@ app.get("/files", (req, res) => {
   });
 });
 
-//This method doesn't seem to end
-/*app.get("/filess/:filename", (req, res) => {
-  gfs.find(
-    {
-      filename: req.params.filename
-    },
-    (err, file) => {
-      if (!file) {
-        return res.status(404).json({
-          err: "no files exist"
-        });
-      }
-
-      // create read stream
-    var readstream = gfs.createReadStream({
-      filename: filename,
-      bucketName: "uploads"
-    });
-
-    // set the proper content type
-    console.log(file.contentType);
-    res.set('Content-Type', file.contentType)
-    // return response
-    return readstream.pipe(res);
-      //return res.json(file);
-    });
-});*/
 
 //This works with postman but can't integrate
 //Can download a file put on the server from postman

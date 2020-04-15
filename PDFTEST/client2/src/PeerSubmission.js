@@ -1,3 +1,4 @@
+//PDFTEST
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -158,7 +159,7 @@ class PeerSubmission extends React.Component {
     render() {
         return (
           <div>
-          <div className="Download">
+          <div >
               <button onClick={this.fileDownloadHandler}> Download </button>
           </div>
             <form onSubmit={this.handleSubmit}>
