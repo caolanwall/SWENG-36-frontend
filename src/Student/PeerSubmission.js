@@ -101,7 +101,7 @@ class PeerSubmission extends React.Component {
                 mark: this.state.mark,
             };
 
-            axios.post("http://127.0.0.1/user/", data)
+            axios.post("http://localhost:3001/submission", data)
                 .then(res => console.log(res))
                 .catch(err => console.log(err)
                 );
