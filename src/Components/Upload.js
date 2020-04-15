@@ -20,6 +20,7 @@ class Upload extends Component {
     }
 
     fileUploadHandler = () => {
+      const data = new FormData()
        axios.post("http://localhost:3001/uploadPDF", data, {
             // receive two parameter endpoint url, form data
         })
@@ -27,7 +28,7 @@ class Upload extends Component {
                 console.log(res.statusText)
             })
     }
-    
+
     //// TODO: Code below export.
     //Need to add back  in regular button and fileUploadHAndler when integrating properly.
     render() {
