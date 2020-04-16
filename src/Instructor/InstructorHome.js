@@ -49,6 +49,7 @@ class InstructorHome extends React.Component {
 								const index = this.state.modules.indexOf(module)
 								const spm = this.state.studentsPerModule
 								spm[index] = res.data.data
+								if(!spm[index]) spm[index] = 0
 								this.setState({
 									studentsPerModule: spm	})
 							}
@@ -106,6 +107,7 @@ const NavigationBar = (props) => (
 )
 
 function parseData(props){
+	console.log("Parsing", props.assignments)
 	return props.assignments.map(a => {
 		// Calculate current stage
 		const now = Date.now()
