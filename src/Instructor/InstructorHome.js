@@ -197,7 +197,7 @@ function DataTable(props){
 function routeToAssignment(history, location, index, cells, row) {
 	console.log("Routing to assignment", row)
 	const orig = row.original
-	history.push({pathname: location.pathname+'/assignment/',
+	history.push({pathname: location.pathname+'/assignment',
 		state: {
 			username: location.state.username,
 			userId: location.state.id,
