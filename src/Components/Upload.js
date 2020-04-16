@@ -22,7 +22,7 @@ class Upload extends Component {
     fileUploadHandler = () => {
         const data = new FormData()
         data.append('file', this.state.selectedFile)
-       axios.post("http://localhost:3001/upload", data, {
+       axios.post("http://localhost:3001/uploadPDF", data, {
             // receive two parameter endpoint url, form data
         })
             .then(res => { // then print response status

@@ -113,10 +113,11 @@ class PeerSubmission extends React.Component {
 
     };
 
-    fileDownloadHandler = () => {
+    fileDownloadHandler = (fileDownloadURL) => {
       axios({
         //Below url needs to not be hardcoded in - also must be filename not id
-          url: 'http://localhost:5001/files/51579f1c26ee9b424fd0fd857d7dcd19.pdf',
+        //  url: 'http://localhost:3001/files/928b8649787e3c29357c095fa43e9348.pdf',
+          url: fileDownloadURL,
           method: 'GET',
           responseType: 'blob' //Force to receive data in a Blob Format
       })
@@ -149,7 +150,7 @@ class PeerSubmission extends React.Component {
         return (
           <div>
           <div >
-              <button onClick={this.fileDownloadHandler}> Download </button>
+              <button onClick={this.fileDownloadHandler('http://localhost:3001/files/928b8649787e3c29357c095fa43e9348.pdf')}> Submission to be Marked  </button>
           </div>
             <form onSubmit={this.handleSubmit}>
                 <div>
