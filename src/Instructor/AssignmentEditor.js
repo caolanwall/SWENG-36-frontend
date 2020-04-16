@@ -133,7 +133,7 @@ function DataTable(props){
 
 function routeToSubmission(history, location, index, cells) {
 	//TODO to submission details page
-	history.push({pathname: location.pathname+'/modules/' + index, state: {moduleName: cells[0].value}});
+	//history.push({pathname: location.pathname+'/modules/' + index, state: {moduleName: cells[0].value}});
 }
 
 export default AssignmentEditor;
