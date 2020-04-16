@@ -190,8 +190,18 @@ function DataTable(props){
 	return <InfoTable columns={columns} data={data} routeTo={routeToAssignment}/>;
 }
 
-function routeToAssignment(history, location, index, cells) {
-	history.push({pathname: location.pathname+'/modules/' + index, state: {username: location.state.username, moduleId: index, moduleName: cells[0].value}});
+function routeToAssignment(history, location, index, cells, row) {
+	console.log("Routing to assignment", row)
+	const orig = row.original
+	history.push({pathname: location.pathname+'/assignment/',
+		state: {
+			username: location.state.username,
+			userId: location.state.id,
+			moduleName: orig.module_Code,
+			assignmentId: orig.key,
+			assignmentName:orig.title
+
+		}});
 }
 
 export default InstructorHome;

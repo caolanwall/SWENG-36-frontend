@@ -59,7 +59,7 @@ function Table({ columns, data, routeTo }) {
 			prepareRow(row)
 			return (
 			<Route render={({history, location}) => (
-				<tr {...row.getRowProps()} onClick={() => routeTo(history, location, row.index, row.cells)}>
+				<tr {...row.getRowProps()} onClick={() => routeTo(history, location, row.index, row.cells, row)}>
 					{row.cells.map(cell => {
 						return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
 					})}

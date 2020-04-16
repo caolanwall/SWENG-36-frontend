@@ -10,7 +10,7 @@ class AssignmentEditor extends React.Component {
 		super(props);
 		this.state = {
 			username : this.props.location.state.username,
-			moduleId: this.props.location.state.moduleId,
+			userId: this.props.location.state.userId,
 			moduleName: this.props.location.state.moduleName,
 			assignmentId: this.props.location.state.assignmentId,
 			assignmentName: this.props.location.state.assignmentName,
@@ -19,10 +19,18 @@ class AssignmentEditor extends React.Component {
 	}
 
 	componentDidMount() {
-		let url = 'localhost:3000/instructors/' + this.username + '/modules/' + this.moduleId + '/assignments/' + this.assignmentId;
-		axios.get(url, {headers : {'crossDomain' : true, 'Content-type' : 'application/json'}})
+		//Get all submissions for this assignment
+		const url = 'http://localhost:3001/submission?user_Id='
+			+ this.state.userId +
+			'&assignment_Id=' +
+			this.state.assignmentId;
+
+		axios.get(url,
+			{headers : {'crossDomain' : true,
+				'Content-type' : 'application/json'}})
 			.then(res => {
-				this.setState({modules : res.data})
+				console.log("Result", res)
+				this.setState({submissions : res.data})
 			})
 			.catch(err => console.log(err)
 			);
@@ -37,7 +45,6 @@ class AssignmentEditor extends React.Component {
 			Edit assignment {this.state.assignmentName} from module {this.state.moduleName}
 			</h2>
 			</header>
-			<Buttons />
 			<DataTable />
 			</div>
 		);
@@ -46,18 +53,9 @@ class AssignmentEditor extends React.Component {
 
 const NavigationBar = () => (
 	<LogoutButton />
-
 )
-function Buttons(props){
-	return (
-		<div>
-		<button onClick={() => alert('Something!')}>Do something</button>
-		</div>
-	);
-}
 
 function parseData(){
-	//TODO actually parse JSON module data
 	return makeData(newModule, Math.random() * 20 + 1);
 }
 

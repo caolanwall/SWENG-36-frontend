@@ -11,7 +11,6 @@ import LoginForm from './Components/LoginForm';
 import AssignmentLandingPage from './Student/AssignmentHome';
 import StudentHome from './Student/StudentHome';
 import InstructorHome from './Instructor/InstructorHome';
-import ModuleDetails from './Instructor/ModuleDetails';
 import AssignmentEditor from './Instructor/AssignmentEditor';
 import AssignmentSetup from './Instructor/AssignmentSetup';
 import ModuleSetup from './Instructor/ModuleSetup';
@@ -36,9 +35,8 @@ export default function App () {
 		<Route path="/login" component={LoginForm} />
 		<PrivateRoute path='/students/:username/:assId' component={AssignmentLandingPage} />
 		<PrivateRoute path='/instructors/:username/addmodule' component={ModuleSetup} />
-		<PrivateRoute path='/instructors/:username/modules/:moduleId/assignments/:assignmentId' component={AssignmentEditor} />
+		<PrivateRoute path='/instructors/:username/assignment' component={AssignmentEditor} />
 		<PrivateRoute path='/instructors/:username/addassignment' component={AssignmentSetup} />
-		<PrivateRoute path='/instructors/:username/modules/:moduleId' component={ModuleDetails} />
 		<PrivateRoute path='/instructors/:username' component={InstructorHome} />
 		<PrivateRoute path='/students/:username' component={StudentHome} />
 		<Route exact path="/" render={() => (<Redirect to="/login" />)} />
