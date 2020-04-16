@@ -113,6 +113,8 @@ class PeerSubmission extends React.Component {
 
     };
 
+//Downloads a file from the backend
+//TODO: need to get filename of pdf file from backend - currently hardcoded.
     fileDownloadHandler = (fileDownloadURL) => {
       axios({
         //Below url needs to not be hardcoded in - also must be filename not id
@@ -135,6 +137,7 @@ class PeerSubmission extends React.Component {
           link.href = fileURL;
           link.setAttribute('download', file);
 
+          //Possible error below when using a MacBook.
           if (typeof link.download === 'undefined') {
             link.setAttribute('target', '_blank');
         }
@@ -150,6 +153,7 @@ class PeerSubmission extends React.Component {
         return (
           <div>
           <div >
+          {/*Button will download that file from backend. Currently hardcoded.*/}
               <button onClick={this.fileDownloadHandler('http://localhost:3001/files/928b8649787e3c29357c095fa43e9348.pdf')}> Submission to be Marked  </button>
           </div>
             <form onSubmit={this.handleSubmit}>

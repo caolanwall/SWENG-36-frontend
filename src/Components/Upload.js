@@ -30,8 +30,7 @@ class Upload extends Component {
             })
     }
 
-    //// TODO: Code below export.
-    //Need to add back  in regular button and fileUploadHAndler when integrating properly.
+    //Uploads file successfully to backend.
     render() {
         return (
             <div className="Upload">
@@ -44,4 +43,3 @@ class Upload extends Component {
 
 
 export default Upload;
-//<button onClick={this.fileUploadHandler}> Upload </button>

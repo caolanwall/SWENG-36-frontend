@@ -1,3 +1,6 @@
+//This takes in a document name and displays a pdf stored in the public folder.
+//Not integrated with backend.
+
 import React, { Component } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 
