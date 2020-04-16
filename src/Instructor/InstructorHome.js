@@ -70,7 +70,9 @@ class InstructorHome extends React.Component {
 			</h2>
 			</header>
 			<DataTable assignments={this.state.assignments}
-				studentsPerModule={this.state.studentsPerModule}/>
+				studentsPerModule={this.state.studentsPerModule}
+				modules={this.state.modules}
+			/>
 			</div>
 		);
 	}
@@ -136,13 +138,19 @@ function parseData(props){
 
 		const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }
 
+		console.log("All props", props)
+		const index = props.modules.indexOf(a.module_Code)
+		console.log("Index of", index, a)
+		let SPM = props.studentsPerModule[index]
+		SPM = SPM ? SPM.length : 0
+		console.log("SPM", SPM )
+
 		return {
 		key: a._id,
 		title: a.title,
 		module_Code: a.module_Code,
 		description: a.description,
-		students: props.studentsPerModule[
-			props.assignments.indexOf(a)].length,
+		students: SPM,
 		stage: currentStage.value,
 		stage_End: new Date(nextStage.date).toLocaleTimeString('en-IE', options)
 		}
