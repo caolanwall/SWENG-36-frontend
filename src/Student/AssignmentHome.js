@@ -22,18 +22,42 @@ class AssignmentLandingPage extends Component {
 		return (
 			<div className="main" align='center'>
 			<NavigationBar />
-			<h4>Hello!</h4>
-			<h3>This is the landing page for your assignment '{this.state.assignmentName}' of module '{this.state.moduleName}'</h3>
-			<h2>It is currently at stage '{this.state.stage}', and the next stage is due '{this.state.dueDate}'</h2>
-			<li><Link to="/upload">Upload your answer!</Link></li>
-			<li><Link to="/peersubmission">Submit Your Peer Reviews</Link></li>
-			<li><Link to="/FeedbackReview">Your Received Feedback</Link></li>
+			<h2>Assignment {this.state.assignmentName} for module {this.state.moduleName}</h2>
+			<h2>Currently at stage {this.state.stage}, due by {this.state.dueDate}</h2>
 			</div>
 		);
 	}
 
 }
 const NavigationBar = () => (
+	<div>
 	<LogoutButton />
+	<SubmissionButton />
+	<SubmitReviewButton />
+	<FeedbackButton />
+	</div>
+)
+
+const SubmissionButton = () => (
+	<Link to="/upload">
+	<button>
+	Submit Work
+	</button>
+	</Link>
+)
+
+const SubmitReviewButton = () => (
+	<Link to="/peersubmission">
+	<button>
+	Submit Review
+	</button>
+	</Link>
+)
+const FeedbackButton = () => (
+	<Link to="/FeedbackReview">
+	<button>
+	Feedback
+	</button>
+	</Link>
 )
 export default AssignmentLandingPage;

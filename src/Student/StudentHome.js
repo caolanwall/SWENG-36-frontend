@@ -139,9 +139,16 @@ function DataTable(props){
 	return <InfoTable columns={columns} data={data} routeTo={routeToAssignment}/>;
 }
 
-function routeToAssignment(history, location, index, cells) {
-	//TODO route correctly depending on the assignment stage
-	history.push({pathname: location.pathname + '/' + index, state: {moduleName: cells[0].value, assignmentName: cells[1].value, stage: cells[2].value, dueDate: cells[3].value}});
+function routeToAssignment(history, location, index, cells, row) {
+	const orig = row.original
+	history.push(
+		{pathname: location.pathname + '/assignment',
+			state: {
+				moduleName: orig.module_Code,
+				assignmentName: orig.title,
+				stage: orig.stage,
+				dueDate:orig.stage_End
+			}});
 }
 
 export default StudentHome;

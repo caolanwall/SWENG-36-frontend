@@ -33,7 +33,7 @@ export default function App () {
 		<Route path="/FeedbackReview" component={FeedbackReview} />
 		<Route path="/feedback/comments" component={CommentsDisplay} />
 		<Route path="/login" component={LoginForm} />
-		<PrivateRoute path='/students/:username/:assId' component={AssignmentLandingPage} />
+		<PrivateRoute path='/students/:username/assignment' component={AssignmentLandingPage} />
 		<PrivateRoute path='/instructors/:username/addmodule' component={ModuleSetup} />
 		<PrivateRoute path='/instructors/:username/assignment' component={AssignmentEditor} />
 		<PrivateRoute path='/instructors/:username/addassignment' component={AssignmentSetup} />
