@@ -109,7 +109,6 @@ const NavigationBar = (props) => (
 )
 
 function parseData(props){
-	console.log("Parsing", props.assignments)
 	return props.assignments.map(a => {
 		// Calculate current stage
 		const now = Date.now()
@@ -138,12 +137,9 @@ function parseData(props){
 
 		const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' }
 
-		console.log("All props", props)
 		const index = props.modules.indexOf(a.module_Code)
-		console.log("Index of", index, a)
 		let SPM = props.studentsPerModule[index]
 		SPM = SPM ? SPM.length : 0
-		console.log("SPM", SPM )
 
 		return {
 		key: a._id,
