@@ -36,11 +36,7 @@ class Upload extends Component {
         return (
             <div className="Upload">
                 <input type="file" onChange={this.fileSelectHandler} />
-                <Link to={{pathname:"/pdfView", docName:"/CompMathsAss1V3.pdf"}}>
-                  <button type="button">
-                    Upload
-                  </button>
-                </Link>
+                <button onClick={this.fileUploadHandler}> Upload </button>
             </div>
         );
     }
